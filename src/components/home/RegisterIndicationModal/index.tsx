@@ -134,7 +134,12 @@ export function RegisterIndicationModal({ show, onHide }: ModalProps) {
         ? newPhoto.location
         : "/partnerIcon.svg",
       photo_key: newPhoto.key,
+      city: {
+        name: indicationData.city.value,
+        state: indicationData.state.value,
+      },
     });
+    console.log("connect: ", connect);
     if (connect.status !== 200) {
       alert(connect.body);
       return setRegisterLoading(false);
@@ -142,6 +147,10 @@ export function RegisterIndicationModal({ show, onHide }: ModalProps) {
     setRegisterLoading(false);
     return onHide();
   }
+
+  useEffect(() => {
+    handleIBGEState();
+  }, []);
 
   return (
     <>
@@ -241,7 +250,13 @@ export function RegisterIndicationModal({ show, onHide }: ModalProps) {
               </Form>
             </div>
             <Form>
-              <div style={{ display: "flex", width: "100%" }}>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  width: "100%",
+                }}
+              >
                 <FormGroup style={{ display: "flex", width: "100%" }}>
                   <label htmlFor="agent_phone_number">
                     Telefone de contato
@@ -260,7 +275,7 @@ export function RegisterIndicationModal({ show, onHide }: ModalProps) {
                     style={{ width: "20rem" }}
                   />
                 </FormGroup>
-                <FormGroup>
+                <FormGroup style={{ display: "flex", width: "100%" }}>
                   <label htmlFor="cpfCnpj">CNPJ da Empresa</label>
                   <input
                     id="cpfCnpj"
@@ -276,6 +291,8 @@ export function RegisterIndicationModal({ show, onHide }: ModalProps) {
                     style={{ width: "20rem", marginRight: "3rem" }}
                   />
                 </FormGroup>
+              </div>
+              <div className="flex w-full justify-evenly">
                 <Select
                   name="state"
                   options={stateList}
