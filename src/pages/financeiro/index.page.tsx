@@ -1,6 +1,6 @@
 import { WithdrawModal } from "@/components/financeiro/WithdrawModal";
 import Theme from "@/styles/themes";
-import { useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Content,
   Main,
@@ -16,7 +16,7 @@ export default function Profile() {
   const [showWithdrawModal, setShowWithdrawModal] = useState(false);
   const main = useRef(null);
   const content = useRef(null);
-  useLayoutEffect(() => {
+  useEffect(() => {
     const ctx = gsap.context(() => {
       gsap.to(".mainContent", {
         x: "-100%",
@@ -41,32 +41,34 @@ export default function Profile() {
       <RootLayout fadeOut={() => fadeOut()}>
         <Content className="mainContent" ref={content} style={{ opacity: 1 }}>
           <Main>
-          <h2>Financeiro</h2>
-          <WithDrawContainer>
-          <WithdrawDiv>
-            <div>
-            <p> Disponível para retirada </p>
-            <h3> R$ 3500,00 </h3>
-            </div>
-              
-            <div>
-              <button>
-                Fazer Retirada
-              </button>
-            </div> 
-          </WithdrawDiv>
-          <RevenueCard>
-            <div style={{ width: "40%", justifyContent:'center'}}> 
-              <img src="/revenueCardIco.svg" alt="" />
-            </div>
-            <div> 
-              <h3> Total de sua <br/>Receita:</h3>
-              <h2> R$ 17.357,19</h2>
-              <p> Disponível para Saque</p>
-            </div>
-          </RevenueCard>
-          </WithDrawContainer>
-          <div
+            <h2>Financeiro</h2>
+            <WithDrawContainer>
+              <WithdrawDiv>
+                <div>
+                  <p> Disponível para retirada </p>
+                  <h3> R$ 3500,00 </h3>
+                </div>
+
+                <div>
+                  <button>Fazer Retirada</button>
+                </div>
+              </WithdrawDiv>
+              <RevenueCard>
+                <div style={{ width: "40%", justifyContent: "center" }}>
+                  <img src="/revenueCardIco.svg" alt="" />
+                </div>
+                <div>
+                  <h3>
+                    {" "}
+                    Total de sua <br />
+                    Receita:
+                  </h3>
+                  <h2> R$ 17.357,19</h2>
+                  <p> Disponível para Saque</p>
+                </div>
+              </RevenueCard>
+            </WithDrawContainer>
+            <div
               style={{
                 borderTop: "1px solid" + Theme.color.gray_20,
                 margin: "2rem 0 2rem 0.1rem",

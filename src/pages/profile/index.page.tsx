@@ -1,7 +1,7 @@
 import { GlobalButton } from "@/components/Global/Button";
 import { BlockAccountModal } from "@/components/profile/BlockAccountModal";
 import { NewPasswordModal } from "@/components/profile/NewPasswordModal";
-import { useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { UserEditSVG } from "../../../public/UserEdit";
 import {
   AvatarContainer,
@@ -32,7 +32,7 @@ export default function Profile() {
   };
   const main = useRef(null);
   const content = useRef(null);
-  useLayoutEffect(() => {
+  useEffect(() => {
     const ctx = gsap.context(() => {
       gsap.to(".mainContent", {
         x: "-100%",
@@ -61,38 +61,47 @@ export default function Profile() {
             <header>
               <h2>Meu Perfil</h2>
               {isWidthGreaterThan700 ? (
-                  <button onClick={() => setShowNewPasswordModal(true)}>
-                    Trocar Senha
-                  </button>
-                ) : (
-                  <div/>
-                )}      
+                <button onClick={() => setShowNewPasswordModal(true)}>
+                  Trocar Senha
+                </button>
+              ) : (
+                <div />
+              )}
             </header>
             <PersonalInfo>
-            {isWidthGreaterThan700 ? (
-                  <AvatarContainer>
+              {isWidthGreaterThan700 ? (
+                <AvatarContainer>
                   <img src="/sidebar/user.png" alt="" />
                   <ChangeAvatarButton>
                     <UserEditSVG />
                     Substituir
                   </ChangeAvatarButton>
                 </AvatarContainer>
-                ) : (
-                  <AvatarContainer style={{ width:'100%', display:'flex', justifyContent:'space-between', flexDirection: 'row'}}>
-                    <div style={{ display: 'flex', flexDirection:'column'}}>
-                      <img src="/sidebar/user.png" alt="" />
-                      <ChangeAvatarButton>
-                        <UserEditSVG />
-                        Substituir
-                      </ChangeAvatarButton>
-                    </div>
-                    <div>
-                <PassWordButton onClick={() => setShowNewPasswordModal(true)}>
-                    Trocar Senha
-                  </PassWordButton>
+              ) : (
+                <AvatarContainer
+                  style={{
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    flexDirection: "row",
+                  }}
+                >
+                  <div style={{ display: "flex", flexDirection: "column" }}>
+                    <img src="/sidebar/user.png" alt="" />
+                    <ChangeAvatarButton>
+                      <UserEditSVG />
+                      Substituir
+                    </ChangeAvatarButton>
                   </div>
-              </AvatarContainer>
-                )}
+                  <div>
+                    <PassWordButton
+                      onClick={() => setShowNewPasswordModal(true)}
+                    >
+                      Trocar Senha
+                    </PassWordButton>
+                  </div>
+                </AvatarContainer>
+              )}
               <FormSection>
                 <FormGroup>
                   <label htmlFor="name">Nome Completo</label>
@@ -106,7 +115,7 @@ export default function Profile() {
                   <label htmlFor="phone">Telefone</label>
                   <input type="tel" id="phone" value={"(11) 99999-999"} />
                 </FormGroup>
-              </FormSection>           
+              </FormSection>
               <FormSection>
                 <FormGroup>
                   <label htmlFor="CPF">Seu CPF</label>
@@ -153,37 +162,36 @@ export default function Profile() {
                         checked={selectedGender === "female"}
                         onChange={handleRadioChange}
                       />
-                      <label htmlFor="female">Feminino</label>                    
+                      <label htmlFor="female">Feminino</label>
                     </RadioGroup>
                   </RadioContainer>
                 </div>
               </FormSection>
             </PersonalInfo>
-            <Line/>
-            <PersonalInfo style={{marginTop:'2rem'}}>
-                    <div/>
-                      <FormSection>
-                        <FormGroup>
-                          <label htmlFor="name">Nome da Empresa (Opcional)</label>
-                          <input type="text" id="enterprise-name" value={"Axion"} />
-                        </FormGroup>
-                        <FormGroup>
-                          <label htmlFor="cnpj">Seu Cargo (Opcional)</label>
-                          <input type="email" id="email" value={"Funcionário"} />
-                        </FormGroup>
-                        
-                      </FormSection>
-                      <FormSection>
-                        <div style={{}}/>
-                        <FormGroup>
-                          <label htmlFor="name">CNPJ (Opcional)</label>
-                          <input type="text" id="name" value={"00.000.000/0001-00"} />
-                        </FormGroup>
-                        <GlobalButton
-                          content="Atualizar Cadastro"
-                          style={{ width: "100%", marginTop: "2rem" }}
-                        />
-                      </FormSection>
+            <Line />
+            <PersonalInfo style={{ marginTop: "2rem" }}>
+              <div />
+              <FormSection>
+                <FormGroup>
+                  <label htmlFor="name">Nome da Empresa (Opcional)</label>
+                  <input type="text" id="enterprise-name" value={"Axion"} />
+                </FormGroup>
+                <FormGroup>
+                  <label htmlFor="cnpj">Seu Cargo (Opcional)</label>
+                  <input type="email" id="email" value={"Funcionário"} />
+                </FormGroup>
+              </FormSection>
+              <FormSection>
+                <div style={{}} />
+                <FormGroup>
+                  <label htmlFor="name">CNPJ (Opcional)</label>
+                  <input type="text" id="name" value={"00.000.000/0001-00"} />
+                </FormGroup>
+                <GlobalButton
+                  content="Atualizar Cadastro"
+                  style={{ width: "100%", marginTop: "2rem" }}
+                />
+              </FormSection>
             </PersonalInfo>
           </Main>
         </Content>

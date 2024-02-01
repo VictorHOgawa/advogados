@@ -13,12 +13,13 @@ import {
 import { GlobalButton } from "@/components/Global/Button";
 import { CloseButton } from "@/components/Global/Close";
 import { AnalisingModal } from "@/components/Global/Modals/AnalisingModal";
-import { AuthPostAPI, PostAPI } from "@/lib/axios";
+import { AuthPostAPI, IBGEAPI, PostAPI } from "@/lib/axios";
 import Theme from "@/styles/themes";
 import { maskCnpj, maskCpfCnpj, maskPhone } from "@/utils/masks";
 import Image from "next/image";
 import { ChangeEvent, useEffect, useState } from "react";
 import { Modal, Spinner } from "react-bootstrap";
+import Select from "react-select";
 
 interface ModalProps {
   show: boolean;
@@ -32,6 +33,8 @@ export function RegisterIndicationModal({ show, onHide }: ModalProps) {
   const [previewImage, setPreviewImage] = useState<string>("");
   const [photoLoading, setPhotoLoading] = useState(false);
   const [registerLoading, setRegisterLoading] = useState(false);
+  const [stateList, setStateList] = useState<any>([]);
+  const [cityList, setCityList] = useState<any>([]);
   const [newPhoto, setNewPhoto] = useState({
     key: "",
     location: "",
@@ -41,6 +44,16 @@ export function RegisterIndicationModal({ show, onHide }: ModalProps) {
     agent_name: "",
     agent_phone_number: "",
     cpfCnpj: "",
+    city: {
+      id: 0,
+      label: "",
+      value: "",
+    },
+    state: {
+      id: 0,
+      label: "",
+      value: "",
+    },
     photo_location: "",
     photo_key: "",
   });
@@ -80,6 +93,38 @@ export function RegisterIndicationModal({ show, onHide }: ModalProps) {
       reader.readAsDataURL(file);
     }
   };
+
+  async function handleIBGEState() {
+    const connect = await IBGEAPI(`/estados/?orderBy=nome`);
+    const states: any = [];
+    for (const key in connect.body) {
+      states.push({
+        label: connect.body[key].nome,
+        value: connect.body[key].sigla,
+        id: connect.body[key].id,
+      });
+    }
+    setStateList(states);
+  }
+
+  const selectState = (e: any) => {
+    setIndicationData({ ...indicationData, state: e });
+    handleIBGECity();
+  };
+
+  async function handleIBGECity() {
+    const connect = await IBGEAPI(
+      `/estados/${indicationData.state.id}/municipios?orderBy=name`
+    );
+    const cities: any = [];
+    for (const key in connect.body) {
+      cities.push({
+        label: connect.body[key].nome,
+        value: connect.body[key].nome,
+      });
+    }
+    setCityList(cities);
+  }
 
   async function newIndication() {
     setRegisterLoading(true);
@@ -231,6 +276,55 @@ export function RegisterIndicationModal({ show, onHide }: ModalProps) {
                     style={{ width: "20rem", marginRight: "3rem" }}
                   />
                 </FormGroup>
+                <Select
+                  name="state"
+                  options={stateList}
+                  onChange={(e) => selectState(e)}
+                  placeholder="Estado"
+                  menuPlacement="auto"
+                  styles={{
+                    control: (base) => ({
+                      ...base,
+                      height: 53,
+                      width: 220,
+                    }),
+                    indicatorSeparator: (base) => ({
+                      ...base,
+                      display: "none",
+                    }),
+                    input: (base) => ({
+                      ...base,
+                      height: 53,
+                      width: 220,
+                    }),
+                  }}
+                />
+                <Select
+                  name="city"
+                  onFocus={() => handleIBGECity()}
+                  options={cityList}
+                  menuPlacement="auto"
+                  styles={{
+                    control: (base) => ({
+                      ...base,
+                      height: 53,
+                      width: 220,
+                    }),
+                    indicatorSeparator: (base) => ({
+                      ...base,
+                      display: "none",
+                    }),
+                    input: (base) => ({
+                      ...base,
+                      height: 53,
+                      width: 220,
+                    }),
+                  }}
+                  onChange={(e: any) =>
+                    setIndicationData({ ...indicationData, city: e })
+                  }
+                  placeholder="Cidade"
+                />
               </div>
               <RegisterPartner
                 disabled={registerLoading}

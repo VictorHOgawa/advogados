@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export const useWindowDimensions = () => {
+export const windowWidth = (maxWidth: number) => {
   const [width, setWidth] = useState(100);
 
   const updateDimensions = () => {
@@ -11,5 +11,5 @@ export const useWindowDimensions = () => {
     window.addEventListener("resize", updateDimensions);
     return () => window.removeEventListener("resize", updateDimensions);
   }, []);
-  return width > 700 ? true : false;
+  return width <= maxWidth ? true : false;
 };
