@@ -14,6 +14,7 @@ export const Form = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.4em;
+  width: 90%;
 `;
 
 export const FormHeader = styled.div`
@@ -54,13 +55,12 @@ export const WithDrawCard = styled.div`
   box-shadow: 0.3em 0.3em 0.3em rgba(0, 0, 0, 0.6);
   border-radius: 5px;
   align-items: center;
-  
 
-  span{
+  span {
     font-size: 0.8rem;
     color: lightgray;
   }
-  h2{
+  h2 {
     font-size: 1.2rem;
     color: white;
   }
@@ -68,7 +68,7 @@ export const WithDrawCard = styled.div`
 
 export const FormGroup = styled.div`
   display: flex;
-  gap: 0.5rem;
+  gap: 0.3rem;
   flex-direction: column;
 
   label {
@@ -76,7 +76,7 @@ export const FormGroup = styled.div`
   }
 
   input {
-    padding: 1.25rem 1rem;
+    padding: 0.5rem 1rem;
     border-radius: 5px;
     border: 1px solid ${({ theme }) => theme.color.gray_20};
     outline: 0;
@@ -120,43 +120,39 @@ export const SuccessModal = styled.div`
   }
 `;
 export const CircleIcon = styled.div`
-      width: 5.5rem;
-    height: 5.5rem;
-    margin: 3.5rem 0 1.5rem;
-
+  width: 5.5rem;
+  height: 5.5rem;
+  margin: 3.5rem 0 1.5rem;
 `;
 export const CodeButton = styled.button`
-height: 3rem;
-width: 8rem;
-align-items: center;
-border: none;
-margin-top: 1rem; 
-font-size: 1.4rem;
-font-weight: bold;
-letter-spacing: 0.1rem;
-border-radius: 5px;
-color: white;
-background-color: ${({ theme }) => theme.color.darkBlueAxion};
-
+  height: 3rem;
+  width: 8rem;
+  align-items: center;
+  border: none;
+  margin-top: 1rem;
+  font-weight: bold;
+  letter-spacing: 0.1rem;
+  border-radius: 5px;
+  color: white;
+  background-color: ${({ theme }) => theme.color.darkBlueAxion};
 `;
 export const SearchPartner = styled.div`
   display: flex;
-  margin-top: 1rem ;
-  background-color: #F5F4F7;
+  margin-top: 1rem;
+  background-color: #f5f4f7;
   padding: 1rem;
   align-items: center;
   width: 100%;
   border-radius: 10px;
-  input{
+  input {
     margin-left: 0.3rem;
-    border:none;
-    color: #8790AB;
+    border: none;
+    color: #8790ab;
     background-color: transparent;
   }
   input:focus {
-    outline: none; 
-}
-
+    outline: none;
+  }
 `;
 export const RegisterPartner = styled.button`
   background-color: ${({ theme }) => theme.color.green_70};
@@ -170,7 +166,7 @@ export const RegisterPartner = styled.button`
   padding: 0.5rem;
   transition: 0.3s;
   font-size: 0.8rem;
-  img{
+  img {
     width: 1rem;
     height: 1rem;
     margin-right: 0.5rem;

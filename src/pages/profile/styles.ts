@@ -27,7 +27,7 @@ export const Content = styled.div`
     width: 100%;
     left: 100%;
     padding: 0rem;
-    padding-top: 0.4rem
+    padding-top: 0.4rem;
   }
 `;
 
@@ -39,7 +39,7 @@ export const Main = styled.main`
   padding: 2.25rem;
   @media (max-width: 950px) {
     padding: 1rem;
-    }
+  }
   header {
     display: flex;
     justify-content: space-between;
@@ -86,33 +86,36 @@ export const AvatarContainer = styled.div`
   }
 `;
 export const ChangeAvatarButton = styled.button`
-    background-color: transparent;
-    border: 0;
-    color: ${({ theme }) => theme.color.brand_blue};
-    transition: 0.3s;
-    &:hover {
-      color: ${({ theme }) => theme.color.brand_blue_hover};
-    }
-    &:disabled {
-      color: ${({ theme }) => theme.color.gray_80};
-    }
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: transparent;
+  border: 0;
+  color: ${({ theme }) => theme.color.brand_blue};
+  transition: 0.3s;
+  &:hover {
+    color: ${({ theme }) => theme.color.brand_blue_hover};
+  }
+  &:disabled {
+    color: ${({ theme }) => theme.color.gray_80};
+  }
 `;
 export const PassWordButton = styled.button`
-      background-color: ${({ theme }) => theme.color.brand_blue};
-      color: white;
-      border: 0;
-      border-radius: 6px;
-      padding: 0.75rem 3rem;
-      transition: 0.3s;
-      &:hover {
-        background-color: ${({ theme }) => theme.color.brand_blue_hover};
-      }
+  background-color: ${({ theme }) => theme.color.brand_blue};
+  color: white;
+  border: 0;
+  border-radius: 6px;
+  padding: 0.75rem 3rem;
+  transition: 0.3s;
+  &:hover {
+    background-color: ${({ theme }) => theme.color.brand_blue_hover};
+  }
 `;
 export const FormGroup = styled.div`
   display: flex;
   gap: 0.5rem;
   flex-direction: column;
-  input{
+  input {
     padding: 1.25rem 1rem;
     width: clamp(10rem, 20vw, 20rem);
     border-radius: 5px;
@@ -120,7 +123,7 @@ export const FormGroup = styled.div`
     outline: 0;
     color: ${({ theme }) => theme.color.gray_100};
     font-size: 0.9rem;
-    @media(max-width: 700px){
+    @media (max-width: 700px) {
       width: 100%;
     }
   }
@@ -173,10 +176,9 @@ export const FormSection = styled.div`
   }
 `;
 export const Line = styled.div`
-  border-Top: 2px solid ${Theme.color.gray_20};
+  border-top: 2px solid ${Theme.color.gray_20};
   margin: 2rem 2.5rem 0rem 10rem;
   @media (max-width: 700px) {
     margin: 1.5rem 0rem;
-
   }
 `;

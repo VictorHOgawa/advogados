@@ -7,7 +7,7 @@ interface SwiperComponentProps {
   renderItem: (item: any) => ReactNode;
   nextSlide?: boolean;
   prevSlide?: boolean;
-  slidePerView?: number;
+  slidePerView?: number | string;
 }
 
 export default function SwiperComponent({
@@ -23,7 +23,7 @@ export default function SwiperComponent({
   useEffect(() => {
     const mySwiper = new Swiper(domRef.current!, {
       initialSlide: 0,
-      slidesPerView: slidePerView || 3.1,
+      slidesPerView: "auto" || 3.1,
       spaceBetween: 2,
       //loop: true,
     });

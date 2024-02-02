@@ -1,10 +1,10 @@
 import { styled } from "styled-components";
 
 interface CardsProps {
-    color? : string;
-    lastOdd?: boolean;
-  }
-  
+  color?: string;
+  lastOdd?: boolean;
+}
+
 export const Content = styled.div`
   display: flex;
   flex-direction: column;
@@ -24,24 +24,23 @@ export const Content = styled.div`
     width: 100%;
     left: 100%;
     padding: 0rem;
-    padding-top: 0.4rem
+    padding-top: 0.4rem;
   }
   h2 {
-      font-size: 1.6rem;
-      font-weight: 600;
-    }
-  
+    font-size: 1.6rem;
+    font-weight: 600;
+  }
 `;
 export const CardContainer = styled.main`
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    width: 90%;
-    padding: 0 2.25rem 0 2.25rem;
-    @media (max-width: 960px) {
-      padding: 0 0 0 0;
-    }
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 90%;
+  padding: 0 2.25rem 0 2.25rem;
+  @media (max-width: 960px) {
+    padding: 0 0 0 0;
+  }
 `;
 export const Main = styled.main`
   width: 90%;
@@ -52,15 +51,15 @@ export const Main = styled.main`
   @media (max-width: 950px) {
     padding: 1rem;
     width: 95%;
-    }
-    @media (max-width: 750px) {
+  }
+  @media (max-width: 750px) {
     padding: 1rem;
     width: 95%;
-    }
+  }
   h2 {
-      font-size: 1.6rem;
-      font-weight: 600;
-    }
+    font-size: 1.6rem;
+    font-weight: 600;
+  }
   header {
     display: flex;
     justify-content: space-between;
@@ -101,7 +100,7 @@ export const RegisterPartner = styled.button`
   @media (max-width: 700px) {
     width: 9.5rem;
   }
-  img{
+  img {
     width: 1rem;
     height: 1rem;
     margin-right: 0.5rem;
@@ -112,21 +111,21 @@ export const RegisterPartner = styled.button`
 `;
 export const SearchPartner = styled.div`
   display: flex;
-  margin-top: 1rem ;
-  background-color: #F5F4F7;
+  margin-top: 1rem;
+  background-color: #f5f4f7;
   padding: 1rem;
   align-items: center;
   width: 20rem;
   border-radius: 10px;
-  input{
+  input {
     margin-left: 0.3rem;
-    border:none;
-    color: #8790AB;
+    border: none;
+    color: #8790ab;
     background-color: transparent;
   }
   input:focus {
-    outline: none; 
-}
+    outline: none;
+  }
 `;
 export const Line = styled.div`
   width: 49%;
@@ -144,6 +143,7 @@ export const PartnerCard = styled.button`
   width: 10rem;
   padding: 1rem;
   background-color: lightgray;
+  justify-content: space-around;
   align-items: center;
   @media (max-width: 700px) {
     width: 9rem;
@@ -151,17 +151,16 @@ export const PartnerCard = styled.button`
     padding: 0.1rem;
     scale: 0.9;
   }
-  h2{
+  h2 {
     height: 2.45rem;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: auto;
     font-size: 1.1rem;
   }
-  h3{
+  h3 {
     font-size: 1rem;
   }
-
 `;
 
 export const SwiperButton = styled.button`
@@ -169,24 +168,23 @@ export const SwiperButton = styled.button`
   height: 2.5rem;
   border: none;
   background-color: transparent;
-  &:hover{
+  &:hover {
     scale: 1.1;
   }
 `;
 export const Section = styled.div`
-
   background-color: white;
   border-radius: 10px;
   width: 49%;
   padding: 2rem;
   @media (max-width: 700px) {
     width: 100%;
-    max-height:70vh;
+    max-height: 70vh;
   }
   h2 {
-      font-size: 1.6rem;
-      font-weight: 600;
-    }
+    font-size: 1.6rem;
+    font-weight: 600;
+  }
   header {
     display: flex;
     justify-content: space-between;
@@ -220,38 +218,38 @@ export const HeaderTitle = styled.div`
   }
 `;
 export const NewsCard = styled.div`
-display: flex;
-flex-direction: row;
-margin-bottom: 0.5rem;
-height: 4.2rem;
-border-radius: 10px;
-width: 100%;
-background-color: #86888A;
-justify-content: space-between;
-padding: 0.5rem;
-img{
-  height: 80%;
-  align-self: center;
-}
-div{
   display: flex;
-  flex-direction: column;
-  margin-left: 0.5rem;
-  align-self: center;
-}
-h3{
-  margin-top: 2.6rem;
-  font-size: 0.8rem;
-}
-h1{
-  font-size: 0.7rem;
-  color: white;
-  font-weight: bold;
-  margin: 0;
-}
-p{
-  font-size: 0.6rem;
-  margin: 0;
-  color: #d0d0d0;
-}
+  flex-direction: row;
+  margin-bottom: 0.5rem;
+  height: 4.2rem;
+  border-radius: 10px;
+  width: 100%;
+  background-color: #86888a;
+  justify-content: space-between;
+  padding: 0.5rem;
+  img {
+    height: 80%;
+    align-self: center;
+  }
+  div {
+    display: flex;
+    flex-direction: column;
+    margin-left: 0.5rem;
+    align-self: center;
+  }
+  h3 {
+    margin-top: 2.6rem;
+    font-size: 0.8rem;
+  }
+  h1 {
+    font-size: 0.7rem;
+    color: white;
+    font-weight: bold;
+    margin: 0;
+  }
+  p {
+    font-size: 0.6rem;
+    margin: 0;
+    color: #d0d0d0;
+  }
 `;

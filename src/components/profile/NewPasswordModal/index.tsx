@@ -4,6 +4,7 @@ import Theme from "@/styles/themes";
 import { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import { Content, Form, FormGroup, FormHeader, SuccessModal } from "./styles";
+import { AuthPutAPI } from "@/lib/axios";
 
 interface ModalProps {
   show: boolean;
@@ -13,6 +14,11 @@ interface ModalProps {
 export function NewPasswordModal({ show, onHide }: ModalProps) {
   const [showSuccess, setShowSuccess] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
+  const [updateLoading, setUpdateLoading] = useState(false);
+
+  const [oldPassword, setOldPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [repeatPassword, setRepeatPassword] = useState("");
 
   useEffect(() => {
     setIsVisible(true);
@@ -26,6 +32,34 @@ export function NewPasswordModal({ show, onHide }: ModalProps) {
   function handleClose() {
     setShowSuccess(false);
     onHide();
+  }
+
+  async function updatePassword() {
+    setUpdateLoading(true);
+    if (!oldPassword || !newPassword) {
+      alert("Preencha todos os campos");
+      return setUpdateLoading(false);
+    } else if (oldPassword === newPassword) {
+      alert("A nova senha deve ser diferente da atual");
+      return setUpdateLoading(false);
+    } else if (newPassword !== repeatPassword) {
+      alert("As senhas devem ser iguais");
+      return setUpdateLoading(false);
+    }
+    const connect = await AuthPutAPI("/partner/password", {
+      oldPassword: oldPassword,
+      newPassword: newPassword,
+    });
+    if (connect.status !== 200) {
+      alert(connect.body);
+      return setUpdateLoading(false);
+    }
+    alert("Senha atualizada");
+    setOldPassword("");
+    setNewPassword("");
+    setRepeatPassword("");
+    onHide();
+    return setUpdateLoading(false);
   }
 
   return (
@@ -43,8 +77,14 @@ export function NewPasswordModal({ show, onHide }: ModalProps) {
             </FormHeader>
             <Form>
               <FormGroup>
-                <label htmlFor="current-password">Senha Atual</label>
-                <input type="password" placeholder="Digite sua senha atual" />
+                <label htmlFor="oldPassword">Senha Atual</label>
+                <input
+                  id="oldPassword"
+                  type="password"
+                  placeholder="Digite sua senha atual"
+                  value={oldPassword}
+                  onChange={(e) => setOldPassword(e.target.value)}
+                />
               </FormGroup>
               <div
                 style={{
@@ -53,18 +93,30 @@ export function NewPasswordModal({ show, onHide }: ModalProps) {
                 }}
               />
               <FormGroup>
-                <label htmlFor="new-password">Nova Senha</label>
-                <input type="password" placeholder="Digite sua nova senha" />
+                <label htmlFor="newPassword">Nova Senha</label>
+                <input
+                  id="newPassword"
+                  type="password"
+                  placeholder="Digite sua nova senha"
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                />
               </FormGroup>
               <FormGroup>
-                <label htmlFor="confirm-password">Repetir Senha</label>
-                <input type="password" placeholder="Confirme sua nova senha" />
+                <label htmlFor="repeatPassword">Repetir Senha</label>
+                <input
+                  id="repeatPassword"
+                  type="password"
+                  placeholder="Confirme sua nova senha"
+                  value={repeatPassword}
+                  onChange={(e) => setRepeatPassword(e.target.value)}
+                />
               </FormGroup>
               <GlobalButton
                 content="Atualizar Senha"
                 padding="1rem"
                 style={{ marginBottom: "4rem" }}
-                onClick={handleUpdatePassword}
+                onClick={updatePassword}
               />
             </Form>
           </Content>

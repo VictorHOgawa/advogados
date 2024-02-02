@@ -9,29 +9,15 @@ import {
   TableRows,
 } from "./styles";
 
-export function UsersTable() {
-  const items = [{
-    date: "05/11/23",
-    description: "Saque via pix",
-    value: "1.550,00",
-    status: "PAGO"
-  }, {
-    date: "05/11/23",
-    description: "Saque via pix",
-    value: "1.550,00",
-    status: "Pendente"
-  }, {
-    date: "05/11/23",
-    description: "Saque via pix",
-    value: "1.550,00",
-    status: "PAGO"
-  }, {
-    date: "05/11/23",
-    description: "Saque via pix",
-    value: "1.550,00",
-    status: "PAGO"
-  }]
-
+interface TransferProps {
+  transfers: {
+    date: string;
+    description: string;
+    value: number;
+    status: string;
+  }[];
+}
+export function TransferTable({ transfers }: TransferProps) {
   return (
     <TableContainer>
       <TableContent>
@@ -42,23 +28,27 @@ export function UsersTable() {
           <TableCol xs="3">Status</TableCol>
         </TableHeader>
         <TableRows>
-          {items.map((index) => (
+          {transfers.map((item) => (
             <>
               <TableRow>
                 <TableCol xs="3">
-                  <span>{index.date}</span>
+                  <span>{item.date}</span>
                 </TableCol>
-                <TableCol xs="3">{index.description}</TableCol>
-                <TableCol xs="3">{index.value}</TableCol>
+                <TableCol xs="3">{item.description}</TableCol>
+                <TableCol
+                  xs="3"
+                  className={`${item.value < 0 ? "text-red-500" : "text-green-500"}`}
+                >
+                  {item.value.toLocaleString("pt-br", {
+                    style: "currency",
+                    currency: "BRL",
+                  })}
+                </TableCol>
                 <TableCol xs="3">
-                  {index.status === "PAGO" ? (
-                <Status paid={true}>
-                  PAGO
-                </Status>
+                  {item.status === "PAGO" ? (
+                    <Status paid={true}>PAGO</Status>
                   ) : (
-                    <Status paid={false}>
-                      PENDENTE
-                    </Status>
+                    <Status paid={false}>PENDENTE</Status>
                   )}
                 </TableCol>
               </TableRow>

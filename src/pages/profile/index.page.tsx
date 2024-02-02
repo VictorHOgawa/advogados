@@ -21,12 +21,26 @@ import gsap from "gsap";
 import RootLayout from "@/components/Layout";
 import { NewUserModal } from "@/components/profile/NewUserModal";
 import { useWindowDimensions } from "@/utils/useWindowDimensions";
+import { AuthPutAPI, authGetAPI } from "@/lib/axios";
+import { maskCpfCnpj, maskPhone } from "@/utils/masks";
 
 export default function Profile() {
   const [selectedGender, setSelectedGender] = useState("male");
   const [showNewPasswordModal, setShowNewPasswordModal] = useState(false);
   const [showBlockAccountModal, setShowBlockAccountModal] = useState(false);
   const [showNewUserModal, setShowNewUserModal] = useState(false);
+  const [updateLoading, setUpdateLoading] = useState(false);
+
+  const [profileData, setProfileData] = useState({
+    name: "",
+    email: "",
+    mobilePhone: "",
+    cpfCnpj: "",
+    birth_date: "",
+    sex: "",
+    photo_location: "",
+    photo_key: "",
+  });
   const handleRadioChange = (event: { target: { value: string } }) => {
     setSelectedGender(event.target.value);
   };
@@ -53,6 +67,34 @@ export default function Profile() {
     return () => ctx.revert();
   };
   const isWidthGreaterThan700 = useWindowDimensions();
+
+  async function getProfile() {
+    const connect = await authGetAPI("/partner/profile");
+    if (connect.status !== 200) {
+      alert(connect.body);
+      return;
+    }
+    return setProfileData(connect.body.profile);
+  }
+
+  async function updateProfile() {
+    setUpdateLoading(true);
+    const connect = await AuthPutAPI("/partner/profile", {
+      ...profileData,
+    });
+    if (connect.status !== 200) {
+      alert(connect.body);
+      return setUpdateLoading(false);
+    }
+    alert("Alterações salvas");
+    getProfile();
+    return setUpdateLoading(false);
+  }
+
+  useEffect(() => {
+    getProfile();
+  }, []);
+
   return (
     <main ref={main}>
       <RootLayout fadeOut={() => fadeOut()}>
@@ -71,7 +113,14 @@ export default function Profile() {
             <PersonalInfo>
               {isWidthGreaterThan700 ? (
                 <AvatarContainer>
-                  <img src="/sidebar/user.png" alt="" />
+                  <img
+                    src={
+                      profileData.photo_location !== null
+                        ? profileData.photo_location
+                        : "/partnerIcon.svg"
+                    }
+                    alt=""
+                  />
                   <ChangeAvatarButton>
                     <UserEditSVG />
                     Substituir
@@ -87,7 +136,14 @@ export default function Profile() {
                   }}
                 >
                   <div style={{ display: "flex", flexDirection: "column" }}>
-                    <img src="/sidebar/user.png" alt="" />
+                    <img
+                      src={
+                        profileData.photo_location !== null
+                          ? profileData.photo_location
+                          : "/partnerIcon.svg"
+                      }
+                      alt=""
+                    />
                     <ChangeAvatarButton>
                       <UserEditSVG />
                       Substituir
@@ -105,25 +161,71 @@ export default function Profile() {
               <FormSection>
                 <FormGroup>
                   <label htmlFor="name">Nome Completo</label>
-                  <input type="text" id="name" value={"Robert Martins"} />
+                  <input
+                    type="text"
+                    id="name"
+                    value={profileData.name}
+                    onChange={(e) =>
+                      setProfileData({ ...profileData, name: e.target.value })
+                    }
+                  />
                 </FormGroup>
                 <FormGroup>
                   <label htmlFor="email">Email</label>
-                  <input type="email" id="email" value={"rober@axion.com.br"} />
+                  <input
+                    type="email"
+                    id="email"
+                    value={profileData.email}
+                    onChange={(e) =>
+                      setProfileData({ ...profileData, email: e.target.value })
+                    }
+                  />
                 </FormGroup>
                 <FormGroup>
                   <label htmlFor="phone">Telefone</label>
-                  <input type="tel" id="phone" value={"(11) 99999-999"} />
+                  <input
+                    type="tel"
+                    id="phone"
+                    value={profileData.mobilePhone}
+                    onChange={(e) =>
+                      setProfileData({
+                        ...profileData,
+                        mobilePhone: maskPhone(e.target.value),
+                      })
+                    }
+                    maxLength={15}
+                  />
                 </FormGroup>
               </FormSection>
               <FormSection>
                 <FormGroup>
-                  <label htmlFor="CPF">Seu CPF</label>
-                  <input type="text" id="CPF" value={"111.111.111-11"} />
+                  <label htmlFor="CPF">Seu CPF/CNPJ</label>
+                  <input
+                    type="text"
+                    id="CPF"
+                    value={profileData.cpfCnpj}
+                    onChange={(e) =>
+                      setProfileData({
+                        ...profileData,
+                        cpfCnpj: maskCpfCnpj(e.target.value),
+                      })
+                    }
+                    maxLength={18}
+                  />
                 </FormGroup>
                 <FormGroup>
                   <label htmlFor="birthDate">Data de Nascimento</label>
-                  <input type="date" id="birthDate" />
+                  <input
+                    type="date"
+                    id="birthDate"
+                    value={profileData.birth_date}
+                    onChange={(e) =>
+                      setProfileData({
+                        ...profileData,
+                        birth_date: e.target.value,
+                      })
+                    }
+                  />
                 </FormGroup>
                 <div>
                   <label htmlFor="gender" style={{ marginBottom: "0.75rem" }}>
@@ -132,44 +234,60 @@ export default function Profile() {
                   <RadioContainer>
                     <RadioGroup>
                       <RadioSelector
-                        htmlFor="male"
-                        checked={selectedGender === "male"}
+                        htmlFor="MALE"
+                        checked={profileData.sex === "MALE"}
                       >
                         <div />
                       </RadioSelector>
                       <input
                         type="radio"
                         name="gender"
-                        id="male"
-                        value="male"
-                        checked={selectedGender === "male"}
-                        onChange={handleRadioChange}
+                        id="MALE"
+                        value="MALE"
+                        checked={profileData.sex === "MALE"}
+                        onChange={() => {
+                          setProfileData({
+                            ...profileData,
+                            sex: "MALE",
+                          });
+                        }}
                       />
-                      <label htmlFor="male">Masculino</label>
+                      <label htmlFor="MALE">Masculino</label>
                     </RadioGroup>
                     <RadioGroup>
                       <RadioSelector
-                        htmlFor="female"
-                        checked={selectedGender === "female"}
+                        htmlFor="FEMALE"
+                        checked={profileData.sex === "FEMALE"}
                       >
                         <div />
                       </RadioSelector>
                       <input
                         type="radio"
                         name="gender"
-                        id="female"
-                        value="female"
-                        checked={selectedGender === "female"}
-                        onChange={handleRadioChange}
+                        id="FEMALE"
+                        value="FEMALE"
+                        checked={profileData.sex === "FEMALE"}
+                        onChange={() => {
+                          setProfileData({
+                            ...profileData,
+                            sex: "FEMALE",
+                          });
+                        }}
                       />
-                      <label htmlFor="female">Feminino</label>
+                      <label htmlFor="FEMALE">Feminino</label>
                     </RadioGroup>
                   </RadioContainer>
                 </div>
+                <GlobalButton
+                  content={updateLoading ? "Atualizando..." : "Atualizar"}
+                  style={{ width: "100%", marginTop: "2rem" }}
+                  onClick={updateProfile}
+                  disabled={updateLoading}
+                />
               </FormSection>
             </PersonalInfo>
             <Line />
-            <PersonalInfo style={{ marginTop: "2rem" }}>
+            {/* <PersonalInfo style={{ marginTop: "2rem" }}>
               <div />
               <FormSection>
                 <FormGroup>
@@ -187,12 +305,8 @@ export default function Profile() {
                   <label htmlFor="name">CNPJ (Opcional)</label>
                   <input type="text" id="name" value={"00.000.000/0001-00"} />
                 </FormGroup>
-                <GlobalButton
-                  content="Atualizar Cadastro"
-                  style={{ width: "100%", marginTop: "2rem" }}
-                />
               </FormSection>
-            </PersonalInfo>
+            </PersonalInfo> */}
           </Main>
         </Content>
         <NewPasswordModal

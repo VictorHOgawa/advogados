@@ -24,9 +24,14 @@ import Select from "react-select";
 interface ModalProps {
   show: boolean;
   onHide: () => void;
+  getIndications: () => void;
 }
 
-export function RegisterIndicationModal({ show, onHide }: ModalProps) {
+export function RegisterIndicationModal({
+  show,
+  onHide,
+  getIndications,
+}: ModalProps) {
   const [showSuccess, setShowSuccess] = useState(false);
   const [showLoading, setShowLoading] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
@@ -139,12 +144,12 @@ export function RegisterIndicationModal({ show, onHide }: ModalProps) {
         state: indicationData.state.value,
       },
     });
-    console.log("connect: ", connect);
     if (connect.status !== 200) {
       alert(connect.body);
       return setRegisterLoading(false);
     }
     setRegisterLoading(false);
+    getIndications();
     return onHide();
   }
 

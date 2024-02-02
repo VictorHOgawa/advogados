@@ -10,6 +10,8 @@ export const Content = styled.main<ModalProps>`
 export const Form = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   gap: 1.4em;
 `;
 export const FormHeader = styled.div`
@@ -45,11 +47,11 @@ export const WithDrawCard = styled.div`
   box-shadow: 0.3em 0.3em 0.3em rgba(0, 0, 0, 0.6);
   border-radius: 5px;
   align-items: center;
-  span{
+  span {
     font-size: 0.8rem;
     color: lightgray;
   }
-  h2{
+  h2 {
     font-size: 1.2rem;
     color: white;
   }
@@ -100,7 +102,7 @@ export const SuccessModal = styled.div`
   }
 `;
 export const CircleIcon = styled.div`
-      width: 5.5rem;
-    height: 5.5rem;
-    margin: 3.5rem 0 1.5rem;
+  width: 5.5rem;
+  height: 5.5rem;
+  margin: 3.5rem 0 1.5rem;
 `;

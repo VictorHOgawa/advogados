@@ -21,12 +21,14 @@ import SwiperComponent from "@/components/Global/swiper";
 import { useWindowDimensions } from "@/utils/useWindowDimensions";
 import { HeaderCards } from "@/components/home/HeaderCards";
 import { Quantity } from "../../utils/const";
+import { authGetAPI } from "@/lib/axios";
 
 export default function Profile() {
   const [showWithdrawModal, setShowWithdrawModal] = useState(false);
   const swiperControls = useSwiper();
   const swiperRef = useRef<any>(null);
   const router = useRouter();
+  const query: any = router.query;
   const Cards = [
     {
       id: 1,
@@ -122,6 +124,34 @@ export default function Profile() {
       name: "7- Nexus Dynamics",
     },
   ];
+
+  const [partnerDetails, setPartnerDetails] = useState({
+    name: "",
+    email: "",
+    mobilePhone: "",
+    photo_location: "",
+    photo_key: "",
+    partners: [
+      {
+        name: "",
+        mobilePhone: "",
+        photo_location: "",
+        photo_key: "",
+      },
+    ],
+    companies: [
+      {
+        name: "",
+        city: {
+          name: "",
+          state: "",
+        },
+        photo_location: "",
+        photo_key: "",
+      },
+    ],
+  });
+
   const main = useRef(null);
   const content = useRef(null);
   useEffect(() => {
@@ -163,6 +193,20 @@ export default function Profile() {
   };
   const isWidthGreaterThan700 = useWindowDimensions();
   const SliderQuantity = Quantity();
+
+  async function getPartnerDetails() {
+    const connect = await authGetAPI(`/partner/${query.id}`);
+    if (connect.status !== 200) {
+      alert(connect.body);
+      return;
+    }
+    return setPartnerDetails(connect.body.partner);
+  }
+
+  useEffect(() => {
+    getPartnerDetails();
+  }, []);
+
   return (
     <main ref={main}>
       <RootLayout fadeOut={() => fadeOut()}>
@@ -182,13 +226,20 @@ export default function Profile() {
               <HeaderPartnerCardDiv>
                 <HeaderPartnerCard>
                   <img src="./truePartner.svg" alt="" />
-                  <img src="./partnerIcon.svg" alt="" />
+                  <img
+                    src={
+                      partnerDetails.photo_location !== null
+                        ? partnerDetails.photo_location
+                        : "./partnerIcon.svg"
+                    }
+                    alt=""
+                  />
                   <span>Sinop-Mt</span>
                 </HeaderPartnerCard>
                 <HeaderPartnerInfo>
-                  <h3>Joao Stel</h3>
-                  <span>joao@email.com</span>
-                  <span> (66) 9 9999-9999</span>
+                  <h3>{partnerDetails.name}</h3>
+                  <span>{partnerDetails.email}</span>
+                  <span>{partnerDetails.mobilePhone}</span>
                 </HeaderPartnerInfo>
               </HeaderPartnerCardDiv>
               <HeadersCardDiv>
@@ -232,7 +283,7 @@ export default function Profile() {
                 }}
               >
                 <SwiperComponent
-                  items={Cards}
+                  items={partnerDetails.partners}
                   slidePerView={SliderQuantity}
                   renderItem={(item) => (
                     <div style={{}}>
@@ -241,14 +292,13 @@ export default function Profile() {
                         onClick={() => router.push("partner-info")}
                       >
                         <img src="./truePartner.svg" alt="" />
-                        {item.image !== "" ? (
-                          <img src="./partnerIcon.svg" alt="" />
+                        {item.photo_location !== null ? (
+                          <img src={item.photo_location} alt="" />
                         ) : (
                           <img src="./partnerIcon.svg" alt="" />
                         )}
-                        <span>{item.city}</span>
                         <h2 style={{ height: "2.6rem" }}>{item.name}</h2>
-                        <h3>{item.role}</h3>
+                        <h3>{item.mobilePhone}</h3>
                       </PartnerCard>
                     </div>
                   )}
@@ -284,21 +334,33 @@ export default function Profile() {
                 }}
               >
                 <SwiperComponent
-                  items={Indication}
-                  slidePerView={SliderQuantity}
+                  items={partnerDetails.companies}
+                  slidePerView={
+                    partnerDetails.companies.length < 5
+                      ? partnerDetails.companies.length
+                      : 5
+                  }
                   renderItem={(item) => (
-                    <div>
-                      <IndicationCard key={item.id}>
-                        <div style={{ height: "100%" }}>
-                          <img src="./inviolavel.svg" alt="" />
-                        </div>
-                        <div>
-                          <h3> {item.name}</h3>
-                          <p> Sinop-Mt</p>
-                          <button> Selecionar</button>
-                        </div>
-                      </IndicationCard>
-                    </div>
+                    <IndicationCard className="w-40" key={item.id}>
+                      <div className="w-40 h-24">
+                        <img
+                          src={
+                            item.photo_location !== null
+                              ? item.photo_location
+                              : "./partnerIcon.svg"
+                          }
+                          className="h-full"
+                          alt=""
+                        />
+                      </div>
+                      <div>
+                        <h3> {item.name}</h3>
+                        <p>
+                          {item.city.name} - {item.city.state}
+                        </p>
+                        <button> Selecionar</button>
+                      </div>
+                    </IndicationCard>
                   )}
                   nextSlide={nextIndicationSlide}
                   prevSlide={prevIndicationSlide}

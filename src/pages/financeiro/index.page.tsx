@@ -10,10 +10,21 @@ import {
 } from "./styles";
 import gsap from "gsap";
 import RootLayout from "@/components/Layout";
-import { UsersTable } from "@/components/financeiro/Table";
+import { TransferTable } from "@/components/financeiro/Table";
+import { authGetAPI } from "@/lib/axios";
 
 export default function Profile() {
   const [showWithdrawModal, setShowWithdrawModal] = useState(false);
+
+  const [balance, setBalance] = useState(0);
+  const [transfers, setTransfers] = useState([
+    {
+      date: "",
+      description: "",
+      value: 0,
+      status: "",
+    },
+  ]);
   const main = useRef(null);
   const content = useRef(null);
   useEffect(() => {
@@ -36,6 +47,30 @@ export default function Profile() {
     }, main);
     return () => ctx.revert();
   };
+
+  async function getBalance() {
+    const connect = await authGetAPI("/partner/financial/balance");
+    if (connect.status !== 200) {
+      alert(connect.body);
+      return;
+    }
+    return setBalance(connect.body.balance);
+  }
+
+  async function getTransfers() {
+    const connect = await authGetAPI("/partner/financial/transfers");
+    if (connect.status !== 200) {
+      alert(connect.body);
+      return;
+    }
+    return setTransfers(connect.body.transfers);
+  }
+
+  useEffect(() => {
+    getBalance();
+    getTransfers();
+  }, []);
+
   return (
     <main ref={main}>
       <RootLayout fadeOut={() => fadeOut()}>
@@ -46,11 +81,19 @@ export default function Profile() {
               <WithdrawDiv>
                 <div>
                   <p> Disponível para retirada </p>
-                  <h3> R$ 3500,00 </h3>
+                  <h3>
+                    {" "}
+                    {balance.toLocaleString("pt-BR", {
+                      style: "currency",
+                      currency: "BRL",
+                    })}{" "}
+                  </h3>
                 </div>
 
                 <div>
-                  <button>Fazer Retirada</button>
+                  <button onClick={() => setShowWithdrawModal(true)}>
+                    Fazer Retirada
+                  </button>
                 </div>
               </WithdrawDiv>
               <RevenueCard>
@@ -77,12 +120,13 @@ export default function Profile() {
             <header>
               <h2>Seu Extrato</h2>
             </header>
-            <UsersTable />
+            <TransferTable transfers={transfers} />
           </Main>
         </Content>
         <WithdrawModal
           show={showWithdrawModal}
           onHide={() => setShowWithdrawModal(false)}
+          balance={balance}
         />
       </RootLayout>
     </main>

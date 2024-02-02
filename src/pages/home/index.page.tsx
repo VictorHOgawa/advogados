@@ -24,11 +24,39 @@ import { HeaderCards } from "@/components/home/HeaderCards";
 import { Quantity } from "@/utils/const";
 import IndicationSwiper from "@/components/home/IndicationSwiper";
 import { useWindowDimensions } from "@/utils/useWindowDimensions";
-import { authGetAPI } from "@/lib/axios";
+import { AuthPostAPI, authGetAPI } from "@/lib/axios";
 export default function Profile() {
   const router = useRouter();
   const [showPartnerModal, setShowPartnerModal] = useState(false);
   const [showIndicationModal, setShowIndicationModal] = useState(false);
+
+  const [indications, setIndications] = useState([
+    {
+      id: "",
+      name: "",
+      agent_name: "",
+      agent_phone_number: "",
+      cpfCnpj: "",
+      partner_id: "",
+      city: {
+        name: "",
+        state: "",
+      },
+      city_id: "",
+      photo_location: "",
+      photo_key: "",
+    },
+  ]);
+  const [partners, setPartners] = useState([
+    {
+      name: "",
+      photo_location: "",
+      photo_key: "",
+      id: "",
+      mobilePhone: "",
+    },
+  ]);
+
   const Cards = [
     {
       id: 1,
@@ -116,36 +144,7 @@ export default function Profile() {
       name: "Noticia 5",
     },
   ];
-  const Indication = [
-    {
-      id: 1,
-      name: " 1- Inviolável",
-    },
-    {
-      id: 2,
-      name: "2- InnovateX Dynamics",
-    },
-    {
-      id: 3,
-      name: "3- MegaTech Solutions",
-    },
-    {
-      id: 4,
-      name: "4- Stellar Synergies",
-    },
-    {
-      id: 5,
-      name: "5- Apex Systems",
-    },
-    {
-      id: 5,
-      name: "6- Virtuoso Ventures ",
-    },
-    {
-      id: 5,
-      name: "7- Nexus Dynamics",
-    },
-  ];
+
   const HeaderCardsArray = [
     {
       color: "#ccb200",
@@ -205,10 +204,22 @@ export default function Profile() {
       alert(connect.body);
       return;
     }
+    return setIndications(connect.body.companies);
+  }
+
+  async function getPartners() {
+    const connect = await authGetAPI("/partner");
+    console.log("connect: ", connect);
+    if (connect.status !== 200) {
+      alert(connect.body);
+      return;
+    }
+    return setPartners(connect.body.partners);
   }
 
   useEffect(() => {
     getIndications();
+    getPartners();
   }, []);
   return (
     <main ref={main}>
@@ -296,23 +307,23 @@ export default function Profile() {
                 }}
               >
                 <SwiperComponent
-                  items={Cards}
-                  slidePerView={SliderQuantity}
+                  items={partners}
+                  slidePerView={partners.length < 5 ? partners.length : 5}
                   renderItem={(item) => (
                     <div>
                       <PartnerCard
                         key={item.name}
-                        onClick={() => router.push("partner-info")}
+                        onClick={() =>
+                          router.push(`partner-info?id=${item.id}`)
+                        }
                       >
-                        <img src="./truePartner.svg" alt="" />
-                        {item.image !== "" ? (
-                          <img src="./partnerIcon.svg" alt="" />
+                        {item.photo_location !== null ? (
+                          <img src={item.photo_location} alt="" />
                         ) : (
-                          <img src="./partnerIcon.svg" alt="" />
+                          <img src="/partnerIcon.svg" alt="" />
                         )}
-                        <span>{item.city}</span>
                         <h2 style={{ height: "2.6rem" }}>{item.name}</h2>
-                        <h3>{item.role}</h3>
+                        <h3>{item.mobilePhone}</h3>
                       </PartnerCard>
                     </div>
                   )}
@@ -336,26 +347,31 @@ export default function Profile() {
               justifyContent: "space-between",
             }}
           >
-            <Section style={{ overflow: "hidden", marginBottom: "2rem" }}>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  flexDirection: isWindowAbove700 ? "row" : "column",
-                }}
-              >
-                <h2>Indicações</h2>
-                <RegisterPartner onClick={() => setShowIndicationModal(true)}>
-                  <img src="/addIcon.svg" alt="" />
-                  Nova indicação
-                </RegisterPartner>
-              </div>
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <Line />
-                <Line />
-              </div>
-              <IndicationSwiper items={Cards} />
-            </Section>
+            {indications[0].name !== "" && (
+              <Section style={{ overflow: "hidden", marginBottom: "2rem" }}>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    flexDirection: isWindowAbove700 ? "row" : "column",
+                  }}
+                >
+                  <h2>Indicações</h2>
+                  <RegisterPartner onClick={() => setShowIndicationModal(true)}>
+                    <img src="/addIcon.svg" alt="" />
+                    Nova indicação
+                  </RegisterPartner>
+                </div>
+                <div
+                  style={{ display: "flex", justifyContent: "space-between" }}
+                >
+                  <Line />
+                  <Line />
+                </div>
+                <IndicationSwiper items={indications} />
+              </Section>
+            )}
+
             <Section style={{ maxHeight: "70vh" }}>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <h2>Central de Novidades</h2>
@@ -400,10 +416,12 @@ export default function Profile() {
         <RegisterPartnerModal
           show={showPartnerModal}
           onHide={() => setShowPartnerModal(false)}
+          getPartners={getPartners}
         />
         <RegisterIndicationModal
           show={showIndicationModal}
           onHide={() => setShowIndicationModal(false)}
+          getIndications={getIndications}
         />
       </RootLayout>
     </main>

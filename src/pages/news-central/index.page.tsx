@@ -4,10 +4,20 @@ import gsap from "gsap";
 import RootLayout from "@/components/Layout";
 import { TutorialModal } from "@/components/news-central/VideoModal";
 import { useWindowDimensions } from "@/utils/useWindowDimensions";
+import { authGetAPI } from "@/lib/axios";
 export default function Profile() {
   const [showTutorialModal, setShowTutorialModal] = useState(false);
   const main = useRef(null);
   const content = useRef(null);
+
+  const [news, setNews] = useState([
+    {
+      id: "",
+      title: "",
+      description: "",
+      videoUrl: "",
+    },
+  ]);
 
   const isWindowAbove700 = useWindowDimensions();
 
@@ -62,6 +72,20 @@ export default function Profile() {
       url: "https://www.youtube.com/embed/2Vv-BfVoq4g",
     },
   ];
+
+  async function getNews() {
+    const connect = await authGetAPI("/news");
+    if (connect.status !== 200) {
+      alert(connect.body);
+      return;
+    }
+    return setNews(connect.body.news);
+  }
+
+  useEffect(() => {
+    getNews();
+  }, []);
+
   return (
     <main ref={main}>
       <RootLayout fadeOut={() => fadeOut()}>
@@ -75,74 +99,86 @@ export default function Profile() {
                 flexDirection: "column",
               }}
             >
-              {Videos.map((item: any) => (
-                <div key={item.id}>
-                  <Line />
-                  <VideoCard>
-                    {!isWindowAbove700 ? (
-                      <div style={{ display: "flex", flexDirection: "column" }}>
-                        <h1>{item.title}</h1>
-                        <iframe
-                          src={item.url}
-                          title="YouTube video player"
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                          allowFullScreen
-                        ></iframe>
-                        <div>
-                          <p>{item.description}</p>
-                          <div
-                            style={{
-                              flexDirection: "row",
-                              width: "90%",
-                              justifyContent: "space-around",
-                              alignSelf: "center",
-                            }}
-                          >
-                            <button
-                              onClick={() =>
-                                handleOpenVideoModal(item.url, item.title)
-                              }
-                            >
-                              Abrir Video
-                            </button>
-                            <button>Tutorial</button>
-                          </div>
-                        </div>
-                      </div>
-                    ) : (
-                      <>
-                        <iframe
-                          src={item.url}
-                          title="YouTube video player"
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                          allowFullScreen
-                        ></iframe>
-                        <div>
+              {news.length !== 0 ? (
+                news.map((item: any) => (
+                  <div key={item.id}>
+                    <Line />
+                    <VideoCard>
+                      {!isWindowAbove700 ? (
+                        <div
+                          style={{ display: "flex", flexDirection: "column" }}
+                        >
                           <h1>{item.title}</h1>
-                          <p>{item.description}</p>
-                          <div
-                            style={{
-                              flexDirection: "row",
-                              width: "70%",
-                              justifyContent: "space-around",
-                              alignSelf: "center",
-                            }}
-                          >
-                            <button
-                              onClick={() =>
-                                handleOpenVideoModal(item.url, item.title)
-                              }
+                          <iframe
+                            src={item.videoUrl}
+                            title="YouTube video player"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                          ></iframe>
+                          <div>
+                            <p>{item.description}</p>
+                            <div
+                              style={{
+                                flexDirection: "row",
+                                width: "90%",
+                                justifyContent: "space-around",
+                                alignSelf: "center",
+                              }}
                             >
-                              Abrir Video
-                            </button>
-                            <button>Tutorial</button>
+                              <button
+                                onClick={() =>
+                                  handleOpenVideoModal(
+                                    item.videoUrl,
+                                    item.title
+                                  )
+                                }
+                              >
+                                Abrir Video
+                              </button>
+                              <button>Tutorial</button>
+                            </div>
                           </div>
                         </div>
-                      </>
-                    )}
-                  </VideoCard>
-                </div>
-              ))}
+                      ) : (
+                        <>
+                          <iframe
+                            src={item.videoUrl}
+                            title="YouTube video player"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                          ></iframe>
+                          <div>
+                            <h1>{item.title}</h1>
+                            <p>{item.description}</p>
+                            <div
+                              style={{
+                                flexDirection: "row",
+                                width: "70%",
+                                justifyContent: "space-around",
+                                alignSelf: "center",
+                              }}
+                            >
+                              <button
+                                onClick={() =>
+                                  handleOpenVideoModal(
+                                    item.videoUrl,
+                                    item.title
+                                  )
+                                }
+                              >
+                                Abrir Video
+                              </button>
+                              <button>Tutorial</button>
+                            </div>
+                          </div>
+                        </>
+                      )}
+                    </VideoCard>
+                  </div>
+                ))
+              ) : (
+                <span>Nenhuma novidade encontrada</span>
+              )}
             </div>
           </Main>
           <TutorialModal
