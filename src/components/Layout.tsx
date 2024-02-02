@@ -1,7 +1,8 @@
-import styled from "styled-components";
+import { HeaderComponent } from "./Global/Header";
 import { Sidebar } from "./Global/Sidebar";
-import { useEffect, useState } from "react";
-import { HeaderBar } from "./Global/HeaderBar";
+import { loginVerifyAPI } from "@/lib/axios";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 interface LayoutProps {
   fadeOut: any;
@@ -14,24 +15,28 @@ const RootLayout = ({
   children: React.ReactNode;
   fadeOut: LayoutProps["fadeOut"];
 }) => {
+  const router = useRouter();
+  // async function handleVerify() {
+  //   const connect = await loginVerifyAPI();
+  //   if (connect !== 200) {
+  //     return router.push("/login");
+  //   }
+  //   return;
+  // }
+
+  // useEffect(() => {
+  //   handleVerify();
+  // }, []);
+
   return (
-    <Container>
-      <Sidebar fadeOut={() => fadeOut()} />
-      <HeaderBar/>
-      {children}
-    </Container>
+    <>
+      <div className="flex flex-col bg-black overflow-hidden min-h-screen lg:flex-row">
+        <Sidebar fadeOut={() => fadeOut()} />
+        <HeaderComponent fadeOut={() => fadeOut()} />
+        {children}
+      </div>
+    </>
   );
 };
 
 export default RootLayout;
-
-const Container = styled.div`
-  display: flex;
-  background-color: #111;
-  overflow: hidden;
-  min-height: 100vh;
-  @media (max-width: 950px) {
-    flex-direction: column;
-  }
-
-`;

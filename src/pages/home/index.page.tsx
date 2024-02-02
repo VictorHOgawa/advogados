@@ -1,30 +1,16 @@
 import { useEffect, useRef, useState } from "react";
-import {
-  CardContainer,
-  Content,
-  HeaderTitle,
-  Line,
-  Main,
-  NewsCard,
-  PartnerCard,
-  RegisterPartner,
-  SearchPartner,
-  Section,
-  SwiperButton,
-} from "./styles";
 import gsap from "gsap";
 import RootLayout from "@/components/Layout";
 import "swiper/swiper-bundle.css";
 import { useRouter } from "next/router";
 import SwiperComponent from "@/components/Global/swiper";
-import SwiperVerticalComponent from "@/components/Global/swiper/swiperVertical";
 import { RegisterPartnerModal } from "@/components/home/RegisterPartnerModal";
 import { RegisterIndicationModal } from "@/components/home/RegisterIndicationModal";
 import { HeaderCards } from "@/components/home/HeaderCards";
-import { Quantity } from "@/utils/const";
-import IndicationSwiper from "@/components/home/IndicationSwiper";
-import { useWindowDimensions } from "@/utils/useWindowDimensions";
-import { AuthPostAPI, authGetAPI } from "@/lib/axios";
+import { authGetAPI } from "@/lib/axios";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+
 export default function Profile() {
   const router = useRouter();
   const [showPartnerModal, setShowPartnerModal] = useState(false);
@@ -57,71 +43,6 @@ export default function Profile() {
     },
   ]);
 
-  const Cards = [
-    {
-      id: 1,
-      name: "Maycon 1Parceiro",
-      role: "desenvolvedor",
-      img: "",
-      city: "Sinop-MT",
-    },
-    {
-      id: 2,
-      name: "Joao 2Parceiro",
-      role: "desenvolvedor",
-      img: "",
-      city: "Sinop-MT",
-    },
-    {
-      id: 3,
-      name: "Amanda 3Parceiro",
-      role: "desenvolvedor",
-      img: "xx",
-      city: "Sinop-MT",
-    },
-    {
-      id: 4,
-      name: "Lucas 4Parceiro",
-      role: "desenvolvedor",
-      city: "Sinop-MT",
-      img: "",
-    },
-    {
-      id: 5,
-      name: "Camila 5Parceiro",
-      role: "desenvolvedor",
-      img: "",
-      city: "Sinop-MT",
-    },
-    {
-      id: 6,
-      name: "Pedro 6Parceiro",
-      role: "desenvolvedor",
-      img: "",
-      city: "Sinop-MT",
-    },
-    {
-      id: 7,
-      name: "Isabela 7Parceiro",
-      role: "desenvolvedor",
-      img: "",
-      city: "Sinop-MT",
-    },
-    {
-      id: 8,
-      name: "Gabriel 8Parceiro",
-      role: "desenvolvedor",
-      img: "",
-      city: "Sinop-MT",
-    },
-    {
-      id: 9,
-      name: "Larissa 9Parceiro",
-      role: "desenvolvedor",
-      img: "",
-      city: "Sinop-MT",
-    },
-  ];
   const Noticias = [
     {
       id: 1,
@@ -166,7 +87,6 @@ export default function Profile() {
   ];
   const main = useRef(null);
   const content = useRef(null);
-  const SliderQuantity = Quantity();
   useEffect(() => {
     const ctx = gsap.context(() => {
       gsap.to(".mainContent", {
@@ -196,7 +116,15 @@ export default function Profile() {
     setPrevSlide(!prevSlide);
   };
 
-  const isWindowAbove700 = useWindowDimensions();
+  const [width, setWidth] = useState(100);
+  const updateDimensions = () => {
+    setWidth(window.innerWidth);
+  };
+  useEffect(() => {
+    setWidth(window.innerWidth);
+    window.addEventListener("resize", updateDimensions);
+    return () => window.removeEventListener("resize", updateDimensions);
+  }, []);
 
   async function getIndications() {
     const connect = await authGetAPI("/nominatedCompany");
@@ -221,41 +149,33 @@ export default function Profile() {
     getIndications();
     getPartners();
   }, []);
+
   return (
     <main ref={main}>
       <RootLayout fadeOut={() => fadeOut()}>
-        <Content className="mainContent" ref={content} style={{ opacity: 1 }}>
-          <HeaderTitle>
-            <h2>Seu DashBoard</h2>
-          </HeaderTitle>
-          <CardContainer>
-            {isWindowAbove700 === true ? (
-              <>
-                {HeaderCardsArray.map((item: any) => (
-                  <div key={item}>
-                    <HeaderCards
-                      color={item.color}
-                      title={item.title}
-                      number={item.number}
-                      text={item.text}
-                    />
-                  </div>
-                ))}
-              </>
-            ) : (
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  width: "100%",
-                  overflow: "hidden",
-                }}
+        <div
+          className="mainContent bg-grayBackground relative m-1 rounded-tl-2xl rounded-bl-2xl p-2 w-full left-full lg:w-[calc(100%-18rem)] lg:left-[calc(100%-18rem)]"
+          ref={content}
+          style={{ opacity: 1 }}
+        >
+          <header className="w-full flex flex-col p-1">
+            <h2 className="text-2xl font-bold">Seu DashBoard</h2>
+            <div className="headerMenu flex w-full lg:w-4/5 self-center py-1">
+              <Swiper
+                className="mySwiper p-1"
+                slidesPerView={
+                  width < 550
+                    ? 1.5
+                    : width >= 550 && width < 768
+                      ? 2.5
+                      : width >= 1024 && width < 1360
+                        ? 2.7
+                        : 3
+                }
               >
-                <SwiperComponent
-                  slidePerView={1.7}
-                  items={HeaderCardsArray}
-                  renderItem={(item) => (
-                    <div>
+                {HeaderCardsArray.map((item: any) => (
+                  <SwiperSlide className="xxs:m-2 lg:m-8 xl:m-3">
+                    <div key={item}>
                       <HeaderCards
                         color={item.color}
                         title={item.title}
@@ -263,29 +183,31 @@ export default function Profile() {
                         text={item.text}
                       />
                     </div>
-                  )}
-                />
-              </div>
-            )}
-          </CardContainer>
-          <Main>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: isWindowAbove700 ? "row" : "column",
-                justifyContent: "space-between",
-              }}
-            >
-              <h2>Parceiros Cadastrados</h2>
-              <RegisterPartner onClick={() => setShowPartnerModal(true)}>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            </div>
+          </header>
+
+          <main className="flex flex-col w-full bg-white rounded-xl lg:rounded-2xl p-2">
+            <div className="flex flex-col lg:flex-row justify-between gap-2">
+              <h2 className="text-xl font-semibold">Parceiros Cadastrados</h2>
+              <button
+                className="RegisterPartner bg-green-70 rounded text-white self-end flex gap-1 p-2 items-center drop-shadow-[2px_2px_2px_rgba(0,0,0,0.25)] hover:bg-green-60 hover:scale-[1.01] transition duration-200 ease-in text-semibold"
+                onClick={() => setShowPartnerModal(true)}
+              >
                 <img src="/addIcon.svg" alt="" />
                 Cadastrar Parceiro
-              </RegisterPartner>
+              </button>
             </div>
-            <SearchPartner style={{ display: "flex" }}>
+            <div className="searchPartner flex items-center mt-4 h-12 rounded-lg w-80 bg-gray-20">
               <img src="/searchIcon.svg" alt="" />
-              <input type="text" placeholder="Pesquisar Parceiro" />
-            </SearchPartner>
+              <input
+                className="bg-transparent ml-2 border-0 w-full h-full focus:outline-none"
+                type="text"
+                placeholder="Pesquisar Parceiro"
+              />
+            </div>
             <div
               style={{
                 display: "flex",
@@ -293,13 +215,14 @@ export default function Profile() {
                 justifyContent: "space-between",
               }}
             >
-              <SwiperButton
+              <button
+                className="SwiperButton w-6 h-10 -ml-2 border-0 bg-transparent transition duration-200 ease-in hover:scale-110"
                 onClick={handlePrevClick}
-                style={{ marginLeft: "-0.5rem" }}
               >
                 <img src="./swiperLeft.svg" alt="" />
-              </SwiperButton>
+              </button>
               <div
+                className="p-1"
                 style={{
                   display: "flex",
                   flexDirection: "column",
@@ -311,108 +234,100 @@ export default function Profile() {
                   slidePerView={partners.length < 5 ? partners.length : 5}
                   renderItem={(item) => (
                     <div>
-                      <PartnerCard
+                      <div
+                        className="Card flex flex-col mt-6 h-60 text-sm w-40 p-2 bg-gray-10 border-[1px] border-black rounded justify-around items-center drop-shadow-[2px_2px_2px_rgba(0,0,0,0.25)]"
                         key={item.name}
                         onClick={() =>
                           router.push(`partner-info?id=${item.id}`)
                         }
                       >
+                        <img className="w-full" src="/truePartner.svg" alt="" />
                         {item.photo_location !== null ? (
                           <img src={item.photo_location} alt="" />
                         ) : (
                           <img src="/partnerIcon.svg" alt="" />
                         )}
-                        <h2 style={{ height: "2.6rem" }}>{item.name}</h2>
-                        <h3>{item.mobilePhone}</h3>
-                      </PartnerCard>
+                        {/* <h3>
+                          {item.city.name} - {item.city.state}
+                        </h3> */}
+                        <h2 className="font-semibold">{item.name}</h2>
+                        <h3 className="text-sm">{item.mobilePhone}</h3>
+                      </div>
                     </div>
                   )}
                   nextSlide={nextSlide}
                   prevSlide={prevSlide}
                 />
               </div>
-              <SwiperButton
+              <button
+                className="SwiperButton w-6 h-10 mr-2 border-0 bg-transparent transition duration-200 ease-in hover:scale-110"
                 onClick={handleNextClick}
-                style={{ marginLeft: "-1rem" }}
               >
                 <img src="./swiperRight.svg" alt="" />
-              </SwiperButton>
+              </button>
             </div>
-          </Main>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: isWindowAbove700 ? "row" : "column",
-              width: "90%",
-              justifyContent: "space-between",
-            }}
-          >
+          </main>
+          <div className="flex flex-col lg:flex-row w-full gap-4 mt-4">
             {indications[0].name !== "" && (
-              <Section style={{ overflow: "hidden", marginBottom: "2rem" }}>
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    flexDirection: isWindowAbove700 ? "row" : "column",
-                  }}
-                >
-                  <h2>Indicações</h2>
-                  <RegisterPartner onClick={() => setShowIndicationModal(true)}>
+              <div className="Section flex flex-col w-full lg:w-1/2 bg-white rounded-xl lg:rounded-2xl xxs:p-2 xs:p-4">
+                <div className="flex flex-col lg:flex-row justify-between gap-2">
+                  <h2 className="text-xl font-semibold">Indicações</h2>
+                  <button
+                    className="newIndication bg-green-70 rounded text-white self-end flex gap-1 p-2 items-center drop-shadow-[2px_2px_2px_rgba(0,0,0,0.25)] hover:bg-green-60 hover:scale-[1.01] transition duration-200 ease-in text-semibold"
+                    onClick={() => setShowIndicationModal(true)}
+                  >
                     <img src="/addIcon.svg" alt="" />
                     Nova indicação
-                  </RegisterPartner>
+                  </button>
                 </div>
-                <div
-                  style={{ display: "flex", justifyContent: "space-between" }}
-                >
-                  <Line />
-                  <Line />
+                <div className="flex gap-4">
+                  <div className="w-[49%] h-0.5 mt-2 bg-black" />
+                  <div className="w-[49%] h-0.5 mt-2 bg-black" />
                 </div>
-                <IndicationSwiper items={indications} />
-              </Section>
+                <div className="flex flex-wrap justify-between h-48 lg:h-64 overflow-y-scroll">
+                  {indications.map((item) => (
+                    <div className="flex flex-col w-[45%] border-[1px] border-black rounded-lg m-1 items-center justify-center text-center">
+                      <img src={item.photo_location} className="h-24" alt="" />
+                      <strong> {item.name}</strong>
+                      {item.city.name} - {item.city.state}
+                    </div>
+                  ))}
+                </div>
+              </div>
             )}
 
-            <Section style={{ maxHeight: "70vh" }}>
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <h2>Central de Novidades</h2>
+            <div className="Section flex flex-col w-full lg:w-1/2 bg-white rounded-xl lg:rounded-2xl xxs:p-2 xs:p-4">
+              <h2 className="text-xl font-semibold">Central de Novidades</h2>
+              <div className="flex gap-4">
+                <div className="w-[49%] h-0.5 mt-2 bg-black" />
+                <div className="w-[49%] h-0.5 mt-2 bg-black" />
               </div>
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <Line />
-                <Line />
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  marginTop: "1rem",
-                  flexWrap: "wrap",
-                }}
-              >
-                <SwiperVerticalComponent
-                  slidePerView={3}
-                  items={Noticias}
-                  renderItem={(item: any) => (
-                    <div key={item} style={{ display: "flex" }}>
-                      <NewsCard key={item.id}>
-                        <img src="./trueLifeIconWhite.svg" alt="" />
-                        <div>
-                          <h1>{item.name}</h1>
-                          <p>
-                            Lorem Ipsum is simply dummy text of the printing and
-                            typesetting industry. Lorem Ipsum has been the
-                            industry's
-                          </p>
-                        </div>
-                        <h3> 25/12</h3>
-                      </NewsCard>
+              <div>
+                <div className="flex flex-wrap justify-between h-48 lg:h-64 overflow-y-scroll">
+                  {Noticias.map((item) => (
+                    <div
+                      className="NewsCard flex w-full bg-[#86888A] m-1 gap-2 min-h-16 rounded-lg border-[1px] border-black p-2 text-white"
+                      key={item.id}
+                    >
+                      <img src="./trueLifeIconWhite.svg" alt="" />
+                      <div className="flex flex-col">
+                        <h1 className="font-bold text-lg">{item.name}</h1>
+                        <p className="text-xs md:text-sm">
+                          Lorem Ipsum is simply dummy text of the printing and
+                          typesetting industry. Lorem Ipsum has been the
+                          industry's Lorem Ipsum is simply dummy text of the
+                          printing and typesetting industry. Lorem Ipsum has
+                          been the industry's
+                        </p>
+                        <h3 className="self-end text-xs md:text-sm"> 25/12</h3>
+                      </div>
                     </div>
-                  )}
-                />
+                  ))}
+                </div>
               </div>
-            </Section>
+            </div>
           </div>
-        </Content>
+        </div>
         <RegisterPartnerModal
           show={showPartnerModal}
           onHide={() => setShowPartnerModal(false)}
