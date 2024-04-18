@@ -6,7 +6,7 @@ export function Header() {
   const [show, setShow] = useState(false);
 
   return (
-    <header className="Header absolute w-full z-10 lg:justify-around items-center bg-primary_color flex px-4 py-2 h-20">
+    <header className="Header absolute w-full z-10 lg:justify-between items-center bg-white flex px-4 py-2 h-20">
       <Image
         className="Icon lg:hidden"
         src="/Icons/offcanvasIcon.svg"
@@ -30,7 +30,7 @@ export function Header() {
           </button>
           <Image
             className="Logo h-5/6"
-            src="/Logo.svg"
+            src="/global/fullLogo.svg"
             alt=""
             width={250}
             height={200}
@@ -40,51 +40,69 @@ export function Header() {
       </Offcanvas>
       <Image
         className="Logo h-2/3"
-        src="/Logo.svg"
+        src="/global/fullLogo.svg"
         alt=""
         width={250}
         height={200}
       />
-      <div className="hidden lg:flex h-20">
-        <label
-          htmlFor="search"
-          className="bg-secondary_neutral_color opacity-50 flex gap-4 w-96 items-center justify-center rounded-3xl h-1/2 self-center"
-        >
+      <div className="hidden lg:flex h-20 text-primary_color font-bold gap-4">
+        <div className="flex gap-2 items-center">
           <Image
-            className="Icon"
-            src="/Icons/magnifyingGlass.svg"
+            src="/Icons/selectedIndicator.svg"
             alt=""
-            width={15}
+            width={30}
             height={15}
           />
-          <input
-            className="Input w-5/6 outline-none bg-secondary_neutral_color"
-            type="text"
-            name="search"
-            placeholder="Pesquise Seu Interesse..."
+          <span>INÍCIO</span>
+        </div>
+        <div className="flex gap-2 items-center">
+          <Image
+            src="/Icons/unselectedIndicator.svg"
+            alt=""
+            width={10}
+            height={10}
           />
-        </label>
+          <span>SOBRE</span>
+        </div>
+        <div className="flex gap-2 items-center">
+          <Image
+            src="/Icons/unselectedIndicator.svg"
+            alt=""
+            width={10}
+            height={10}
+          />
+          <span>ÁREAS</span>
+        </div>
+        <div className="flex gap-2 items-center">
+          <Image
+            src="/Icons/unselectedIndicator.svg"
+            alt=""
+            width={10}
+            height={10}
+          />
+          <span>CASES</span>
+        </div>
       </div>
 
       <div className="lg:flex hidden gap-4 items-center">
-        <button className="Instagram flex items-center justify-center bg-secondary_color p-2 w-10 h-10 rounded-xl">
+        <button className="Instagram flex items-center justify-center bg-secondary_color p-2 w-10 h-10 rounded-sm">
           <Image
             className="Icon w-full h-full"
             src="/Icons/instagramIcon.svg"
             alt=""
-            width={50}
-            height={50}
+            width={40}
+            height={40}
           />
         </button>
-        <button className="Button font font-semibold bg-secondary_color rounded-3xl h-2/3 flex items-center justify-center gap-2 p-2 w-48">
+        <button className="Button font font-semibold bg-secondary_color rounded-sm h-2/3 flex items-center justify-center gap-2 p-2 w-48">
           <Image
             className="Icon"
-            src="/Icons/magnifyingGlass.svg"
+            src="/Icons/whatsappIcon.svg"
             alt=""
             width={15}
             height={15}
           />
-          Default
+          Fale Conosco
           <Image
             className="Icon"
             src="/Icons/arrowRight.svg"

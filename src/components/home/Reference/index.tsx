@@ -71,36 +71,114 @@ export function Reference() {
   console.log("enter: ", enter);
 
   return (
-    <section className="Reference overflow-x-hidden flex flex-col bg-white">
-      {/* <div className="panel absolute z-10 -ml-[100vw] w-screen h-screen bg-primary_color" /> */}
-      <div className="flex flex-col p-4 lg:py-10 lg:px-20 text-2xl xs:text-4xl lg:text-7xl xl:text-9xl font-main_font italic gap-2 w-full ">
-        <label className="label1 -ml-[80vw]">RESPONSABILIDADE</label>
-        <label
-          className="label3 z-20 -ml-[80vw] flex tracking-widest items-center text-secondary_color gap-4 transition duration-200 ease-in-out"
-          onMouseEnter={() => setEnter(true)}
-          onMouseLeave={() => setEnter(false)}
-        >
-          <div className="label4 flex items-center gap-4 lg:w-20 w-10 h-10 lg:h-20">
-            <Image
-              className="Icon"
-              src="/Icons/secondaryArrowRight.svg"
-              alt=""
-              width={80}
-              height={80}
-            />
-            REFERÊNCIA
+    <section className="flex flex-col w-full h-full bg-[url('/global/texturedBackground1.png')] bg-cover bg-no-repeat bg-center">
+      <div className="Results relative flex sm:py-2 p-0 w-full">
+        <Image
+          src="/global/logo.svg"
+          width={400}
+          height={600}
+          alt=""
+          quality={100}
+          className="absolute opacity-10 right-0 top-5"
+        />
+        <div className="flex flex-col w-max absolute -mt-2">
+          <Image src="/global/art1.png" alt="" width={450} height={250} />
+          <Image src="/global/art2.png" alt="" width={450} height={250} />
+        </div>
+        <div className="flex flex-col w-[calc(100%-450px)] ml-[450px] mt-10 p-16 gap-16">
+          <div className="flex flex-col gap-2">
+            <span className="text-secondary_color tracking-widest">
+              DIREITO AGRÁRIO E DO AGRONEGÓCIO
+            </span>
+            <h1 className="text-4xl tracking-wide font-semibold text-primary_color">
+              Protegendo Seu Direito à Terra <br /> e o Legado Rural
+            </h1>
           </div>
-        </label>
-        <label className="flex justify-between">
-          <label className="label2 -ml-[80vw]">PERFORMANCE</label>
-          <Image
-            className="Logo -mt-10 self-end w-12 h-12 lg:w-32 lg:h-32 xl:w-48 xl:h-48"
-            src="/Logomark.svg"
-            alt=""
-            width={200}
-            height={200}
-          />
-        </label>
+          <span className="text-black tracking-wide text-lg w-4/5">
+            Confrontada com uma disputa de terras que ameaçava sua herança
+            familiar, uma família pode procurar nossa ajuda. Especialistas em
+            Direito Agrário, agimos rapidamente para defender sua propriedade e
+            seus direitos, assegurando que sua terra e legado permanecessem
+            seguros. Com determinação e conhecimento, convertemos situações
+            desafiadora para o seu interesse.
+          </span>
+          <div className="flex items-center gap-2">
+            <Image
+              src="/global/avatarPhoto.png"
+              alt=""
+              width={40}
+              height={40}
+            />
+            <span className="text-primary_color text-2xl">
+              Dr. Walmir Machiaveli
+            </span>
+          </div>
+          <div className="flex items-center gap-8">
+            <button className="flex items-center gap-2 bg-secondary_color rounded-sm px-3 py-2 text-white">
+              <Image
+                src="/Icons/whatsappIconWhite.svg"
+                alt=""
+                width={20}
+                height={20}
+              />
+              Falar com Advogado
+            </button>
+            <button className="flex items-center gap-2 bg-primary_color rounded-sm px-3 py-2 text-white">
+              <Image src="/Icons/gavelIcon.svg" alt="" width={20} height={20} />
+              Ver as áreas de Atuação
+            </button>
+          </div>
+        </div>
+      </div>
+      <div className="Results relative flex sm:py-2 p-0 w-full">
+        <div className="flex flex-col w-[calc(100%-450px)] items-end text-end mt-10 px-16 gap-16">
+          <div className="flex flex-col gap-2">
+            <span className="text-secondary_color tracking-widest">
+              DIREITO AGRÁRIO E DO AGRONEGÓCIO
+            </span>
+            <h1 className="text-4xl tracking-wide font-semibold text-primary_color">
+              Protegendo Seu Direito à Terra <br /> e o Legado Rural
+            </h1>
+          </div>
+          <span className="text-black tracking-wide text-lg w-4/5">
+            Confrontada com uma disputa de terras que ameaçava sua herança
+            familiar, uma família pode procurar nossa ajuda. Especialistas em
+            Direito Agrário, agimos rapidamente para defender sua propriedade e
+            seus direitos, assegurando que sua terra e legado permanecessem
+            seguros. Com determinação e conhecimento, convertemos situações
+            desafiadora para o seu interesse.
+          </span>
+          <div className="flex items-center gap-2">
+            <span className="text-primary_color text-2xl">
+              Dr. Walmir Machiaveli
+            </span>
+            <Image
+              src="/global/avatarPhoto.png"
+              alt=""
+              width={40}
+              height={40}
+            />
+          </div>
+          <div className="flex items-center gap-8">
+            <button className="flex items-center gap-2 bg-secondary_color rounded-sm px-3 py-2 text-white">
+              <Image
+                src="/Icons/whatsappIconWhite.svg"
+                alt=""
+                width={20}
+                height={20}
+              />
+              Falar com Advogado
+            </button>
+            <button className="flex items-center gap-2 bg-primary_color rounded-sm px-3 py-2 text-white">
+              <Image src="/Icons/gavelIcon.svg" alt="" width={20} height={20} />
+              Ver as áreas de Atuação
+            </button>
+          </div>
+        </div>
+        <div className="flex flex-col w-max right-0">
+          <Image src="/global/art1.png" alt="" width={450} height={250} />
+          <Image src="/global/art2.png" alt="" width={450} height={250} />
+        </div>
       </div>
     </section>
   );

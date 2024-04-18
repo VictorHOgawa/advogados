@@ -1,5 +1,9 @@
+import RootLayout from "@/components/Layout";
+import { TransferTable } from "@/components/financeiro/Table";
 import { WithdrawModal } from "@/components/financeiro/WithdrawModal";
+import { authGetAPI } from "@/lib/axios";
 import Theme from "@/styles/themes";
+import gsap from "gsap";
 import { useEffect, useRef, useState } from "react";
 import {
   Content,
@@ -8,10 +12,6 @@ import {
   WithDrawContainer,
   WithdrawDiv,
 } from "./styles";
-import gsap from "gsap";
-import RootLayout from "@/components/Layout";
-import { TransferTable } from "@/components/financeiro/Table";
-import { authGetAPI } from "@/lib/axios";
 
 export default function Profile() {
   const [showWithdrawModal, setShowWithdrawModal] = useState(false);

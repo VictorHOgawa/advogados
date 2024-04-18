@@ -4,48 +4,132 @@ export function Results() {
   const cards = [0, 1, 2, 3];
 
   return (
-    <section className="Results flex flex-col p-8 sm:py-2 items-center bg-primary_color w-full h-screen">
-      <Image className="Logo" src="/Logo.svg" alt="" width={200} height={200} />
-      <div className="absolute top-[calc(100vh+33%)] xs:top-[calc(100vh+25%)] md:top-[calc(100vh+20%)] right-0">
+    <section className="Results flex flex-col sm:py-2 items-center bg-primary_color w-full h-full">
+      <div className="w-full flex flex-col gap-2 mt-10 text-center relative">
         <Image
-          className="Decor w-28 lg:w-44"
-          src="/Decor/Decor2.svg"
+          src="/global/decorationLeft.svg"
           alt=""
-          width={200}
-          height={20}
+          width={250}
+          height={60}
+          className=" absolute left-0"
         />
+        <span className="text-secondary_color tracking-wide">
+          NOSSO PASSADO & NOSSO FUTURO
+        </span>
+        <strong className="text-white text-2xl font-semibold">ADVOGADOS</strong>
       </div>
-      <div className="absolute top-[calc(100vh+90%)] sm:top-[calc(100vh+95%)] left-0">
-        <Image
-          className="Decor w-28 lg:w-44"
-          src="/Decor/Decor1.svg"
-          alt=""
-          width={200}
-          height={20}
-        />
-      </div>
-      <div className="flex flex-col font-main_font text-white items-center gap-2 xxs:mt-4 sm:mt-0">
-        <label className="Title font-[550] text-lg xs:text-xl lg:text-3xl">
-          Our results in Numbers
-        </label>
-        <label className="Subtitle text-sm xs:text-base text-light">
-          Lorem ipsum dolor sit amet consectet adipiscing elit eget quamumto.
-        </label>
-      </div>
-      <div className="Cards flex flex-col lg:flex-row lg:items-center lg:w-2/3 lg:h-1/2 xxs:mt-12 sm:mt-8 lg:mt-8 gap-3">
-        <div className="MainCard bg-secondary_color w-full md:w-1/2 md:self-center h-48 xs:h-60 sm:h-48 lg:h-full rounded-3xl"></div>
-        <div className="grid grid-cols-2 lg:flex lg:flex-wrap lg:h-full justify-center items-center justify-items-center self-center w-full md:w-1/2 gap-2">
-          {cards.map((item) => (
-            <div className="SecondaryCards bg-white w-[100%] h-[100%] lg:w-36 lg:h-36 xl:w-44 xl:h-44 rounded-3xl">
-              <Image
-                className="Background z-10 w-full h-full object-cover opacity-[0.001] hover:opacity-80 rounded-3xl transition duration-200 ease-in-out"
-                src="/Facade.svg"
-                alt=""
-                width={500}
-                height={500}
-              />
+      <div className="flex w-full items-center justify-around gap-8 px-8 pb-10 mt-10">
+        <div className="flex flex-col relative rounded-t-lg border-[1px] border-secondary_color">
+          <Image
+            src="/global/attorneyPhoto1.png"
+            alt=""
+            width={300}
+            height={600}
+            className="border-[1px] border-secondary_color rounded-t-lg"
+          />
+          <div className="absolute w-full h-full rounded-t-lg bg-gradient-to-b from-transparent from-35% to-black" />
+          <div className="flex flex-col w-3/4 gap-4 z-20 absolute left-1/2 top-[90%] -translate-x-1/2 -translate-y-[90%]">
+            <div className="w-1/4 bg-transparent mx-auto h-px border-2 border-secondary_color z-10 rounded" />
+            <div className="flex flex-col gap-1">
+              <span className="text-white bg-transparent text-2xl font-semibold">
+                Dr. ABC
+              </span>
+              <span className="text-secondary_color text-lg">OAB XXX</span>
             </div>
-          ))}
+            <button className="flex items-center gap-2 p-2 rounded-sm bg-secondary_color text-white">
+              <Image
+                src="/Icons/whatsappIconWhite.svg"
+                alt=""
+                width={20}
+                height={20}
+              />
+              Falar com Advogado
+            </button>
+          </div>
+        </div>
+        <div className="flex flex-col relative rounded-t-lg border-[1px] border-secondary_color">
+          <Image
+            src="/global/attorneyPhoto2.png"
+            alt=""
+            width={300}
+            height={600}
+            className="border-[1px] border-secondary_color rounded-t-lg"
+          />
+          <div className="absolute w-full h-full rounded-t-lg bg-gradient-to-b from-transparent from-35% to-black" />
+          <div className="flex flex-col w-3/4 gap-4 z-20 absolute left-1/2 top-[90%] -translate-x-1/2 -translate-y-[90%]">
+            <div className="w-1/4 bg-transparent mx-auto h-px border-2 border-secondary_color z-10 rounded" />
+            <div className="flex flex-col gap-1">
+              <span className="text-white bg-transparent text-2xl font-semibold">
+                Dr. ABC
+              </span>
+              <span className="text-secondary_color text-lg">OAB XXX</span>
+            </div>
+            <button className="flex items-center gap-2 p-2 rounded-sm bg-secondary_color text-white">
+              <Image
+                src="/Icons/whatsappIconWhite.svg"
+                alt=""
+                width={20}
+                height={20}
+              />
+              Falar com Advogado
+            </button>
+          </div>
+        </div>
+        <div className="flex flex-col relative rounded-t-lg border-[1px] border-secondary_color">
+          <Image
+            src="/global/attorneyPhoto3.png"
+            alt=""
+            width={300}
+            height={600}
+            className="border-[1px] border-secondary_color rounded-t-lg"
+          />
+          <div className="absolute w-full h-full rounded-t-lg bg-gradient-to-b from-transparent from-35% to-black" />
+          <div className="flex flex-col w-3/4 gap-4 z-20 absolute left-1/2 top-[90%] -translate-x-1/2 -translate-y-[90%]">
+            <div className="w-1/4 bg-transparent mx-auto h-px border-2 border-secondary_color z-10 rounded" />
+            <div className="flex flex-col gap-1">
+              <span className="text-white bg-transparent text-2xl font-semibold">
+                Dr. ABC
+              </span>
+              <span className="text-secondary_color text-lg">OAB XXX</span>
+            </div>
+            <button className="flex items-center gap-2 p-2 rounded-sm bg-secondary_color text-white">
+              <Image
+                src="/Icons/whatsappIconWhite.svg"
+                alt=""
+                width={20}
+                height={20}
+              />
+              Falar com Advogado
+            </button>
+          </div>
+        </div>
+        <div className="flex flex-col relative rounded-t-lg border-[1px] border-secondary_color">
+          <Image
+            src="/global/attorneyPhoto3.png"
+            alt=""
+            width={300}
+            height={600}
+            className="border-[1px] border-secondary_color rounded-t-lg"
+          />
+          <div className="absolute w-full h-full rounded-t-lg bg-gradient-to-b from-transparent from-35% to-black" />
+          <div className="flex flex-col w-3/4 gap-4 z-20 absolute left-1/2 top-[90%] -translate-x-1/2 -translate-y-[90%]">
+            <div className="w-1/4 bg-transparent mx-auto h-px border-2 border-secondary_color z-10 rounded" />
+            <div className="flex flex-col gap-1">
+              <span className="text-white bg-transparent text-2xl font-semibold">
+                Dr. ABC
+              </span>
+              <span className="text-secondary_color text-lg">OAB XXX</span>
+            </div>
+            <button className="flex items-center gap-2 p-2 rounded-sm bg-secondary_color text-white">
+              <Image
+                src="/Icons/whatsappIconWhite.svg"
+                alt=""
+                width={20}
+                height={20}
+              />
+              Falar com Advogado
+            </button>
+          </div>
         </div>
       </div>
     </section>

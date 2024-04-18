@@ -1,120 +1,119 @@
 import Image from "next/image";
 import "swiper/css";
-import { Autoplay } from "swiper/modules";
-import { Swiper, SwiperSlide } from "swiper/react";
 
 export function Team() {
-  const team = [0, 1, 2, 3, 4, 5];
+  const data = [
+    {
+      icon: "businessAdvice.svg",
+      name: "Assessoria Empresarial",
+    },
+    {
+      icon: "agroAdvice.svg",
+      name: "Assessoria para Agronegócio",
+    },
+    {
+      icon: "financialSolutions.svg",
+      name: "Soluções Financeiras",
+    },
+    {
+      icon: "civilLaw.svg",
+      name: "Direito Civil",
+    },
+    {
+      icon: "environmentalLaw.svg",
+      name: "Direito Ambiental",
+    },
+    {
+      icon: "realEstateAdvice.svg",
+      name: "Assessoria Imobiliária",
+    },
+    {
+      icon: "corporateConsultancy.svg",
+      name: "Consultoria Corporativa",
+    },
+    {
+      icon: "holding.svg",
+      name: "Constituição de Holding",
+    },
+    {
+      icon: "lgpdAdvice.svg",
+      name: "Assessoria em LGPD",
+    },
+  ];
   return (
-    <section className="Team flex flex-col py-8 items-center bg-primary_color w-full">
-      <Image className="Logo" src="/Logo.svg" alt="" width={200} height={200} />
-      <div className="absolute top-[calc(250vh+15%)] xs:top-[250vh] sm:top-[calc(250vh+10%)] lg:top-[calc(250vh+20%)] xl:top-[calc(250vh+33%)] left-0">
+    <section className="Team flex flex-col items-center w-full">
+      <Image
+        src="/global/texturedBackground2.png"
+        alt=""
+        width={2000}
+        height={5000}
+        className="w-full h-full object-cover absolute"
+      />
+      <div className="flex flex-col bg-primary_color/90 w-full h-full z-10 p-12 gap-5 items-center text-center">
         <Image
-          className="Decor w-28 lg:w-44"
-          src="/Decor/Decor1.svg"
+          src="/global/fullLogoWhite.svg"
           alt=""
-          width={200}
-          height={20}
+          width={1000}
+          height={300}
+          className="w-1/3 mx-auto"
         />
-      </div>
-      <div className="flex flex-col px-8 font-main_font text-white items-center gap-2 mt-4">
-        <label className="Title font-[550] text-3xl">
-          Our results in Numbers
-        </label>
-        <label className="Subtitle text-light">
-          Lorem ipsum dolor sit amet consectet adipiscing elit eget quamumto.
-        </label>
-      </div>
-      <div className="Cards hidden lg:grid grid-cols-3 justify-center gap-8 mt-10">
-        {team.map((item) => (
-          <div className="Card flex flex-col w-64 h-80 rounded-3xl bg-white">
-            <Image
-              className="Photo w-full h-40 rounded-t-3xl object-cover"
-              src="/Facade.svg"
-              alt=""
-              width={200}
-              height={200}
-            />
-            <div className="CardBody flex flex-col p-4">
-              <div className="Name flex flex-col">
-                <label className="Position text-secondary_color">Dr.</label>
-                <label className="Name font-semibold text-primary_color">
-                  Carlos A. de Paula
-                </label>
-                <label className="mt-2 text-xs text-primary_color font-light">
-                  CEO & CO-FOUNDER
-                </label>
-                <button className="Calendar mt-2 text-primary_color items-center w-max rounded-lg font-semibold text-xs bg-secondary_color flex gap-2 px-2 py-1">
+        <div className="flex flex-col gap-2">
+          <span className="text-secondary_color tracking-wider">
+            AS FRENTES DE TRABALHO DE
+          </span>
+          <strong className="text-white text-5xl">NOSSA ATUAÇÃO</strong>
+        </div>
+        <div className="flex w-full gap-20 items-center">
+          <div className="w-1/2 h-[70vh] grid grid-cols-9 grid-rows-9 gap-6">
+            {data.map((item, index) => (
+              <div
+                key={index}
+                className={`col-span-3 row-span-3 rounded-lg flex flex-col bg-white p-4 ${index % 3 === 0 ? "items-start" : index % 3 === 1 ? "items-center" : "items-end"} justify-between`}
+              >
+                <div className="w-14 h-14 rounded-sm bg-primary_color p-2 flex items-center justify-center">
                   <Image
-                    className="Icon"
-                    src="/Icons/phoneIcon.svg"
+                    src={`/Icons/${item.icon}`}
                     alt=""
-                    width={15}
-                    height={15}
+                    width={100}
+                    height={100}
+                    className="w-full h-full"
+                  />
+                </div>
+                <span className="text-xl font-semibold leading-5 tracking-wider text-primary_color">
+                  {item.name}
+                </span>
+                <button className="flex items-center gap-2 text-white bg-primary_color rounded-sm px-3 py-2">
+                  <Image
+                    src="/Icons/whatsappIconWhite.svg"
+                    alt=""
+                    width={20}
+                    height={20}
                   />
                   Falar com Advogado
                 </button>
               </div>
+            ))}
+          </div>
+          <div className="relative w-1/2 h-[60vh] bg-red-500 flex items-center justify-center">
+            <Image
+              src="/global/art3.png"
+              alt=""
+              width={800}
+              height={800}
+              className="object-cover w-full h-full"
+            />
+            <div className="absolute w-full bg-white/70 backdrop-blur-sm flex flex-col items-center justify-between text-center text-primary_color gap-2 py-4">
+              <Image src="/Icons/suitcase.svg" alt="" width={50} height={50} />
+              <strong className="text-2xl tracking-wider font-semibold">
+                ESPECIALIDADES E EXPERIÊNCIAS
+              </strong>
+              <div className="flex items-center gap-2">
+                <Image src="/Icons/mouse.svg" alt="" width={20} height={20} />
+                <span className="tracking-wide">(PASSE O MOUSE POR CIMA)</span>
+              </div>
             </div>
           </div>
-        ))}
-      </div>
-      <div className="Cards lg:hidden w-full justify-center gap-8 mt-12 lg:mt-8">
-        <Swiper
-          slidesPerView={1.2}
-          spaceBetween={20}
-          centeredSlides
-          loop
-          className="mySwiper"
-          breakpoints={{
-            420: {
-              slidesPerView: 1.4,
-            },
-            768: {
-              slidesPerView: 2.4,
-            },
-          }}
-          autoplay={{
-            delay: 2500,
-            disableOnInteraction: true,
-          }}
-          modules={[Autoplay]}
-        >
-          {team.map((item) => (
-            <SwiperSlide>
-              <div className="Card flex flex-col w-64 h-80 rounded-3xl bg-white">
-                <Image
-                  className="Photo w-full h-40 rounded-t-3xl object-cover"
-                  src="/Facade.svg"
-                  alt=""
-                  width={200}
-                  height={200}
-                />
-                <div className="CardBody flex flex-col p-4">
-                  <div className="Name flex flex-col">
-                    <label className="Position text-secondary_color">Dr.</label>
-                    <label className="Name font-semibold text-primary_color">
-                      Carlos A. de Paula
-                    </label>
-                    <label className="mt-2 text-xs text-primary_color font-light">
-                      CEO & CO-FOUNDER
-                    </label>
-                    <button className="Calendar mt-2 text-primary_color items-center w-max rounded-lg font-semibold text-xs bg-secondary_color flex gap-2 px-2 py-1">
-                      <Image
-                        className="Icon"
-                        src="/Icons/phoneIcon.svg"
-                        alt=""
-                        width={15}
-                        height={15}
-                      />
-                      Falar com Advogado
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </SwiperSlide>
-          ))}
-        </Swiper>
+        </div>
       </div>
     </section>
   );
