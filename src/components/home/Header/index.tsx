@@ -1,45 +1,13 @@
 import Image from "next/image";
 import { useState } from "react";
-import { Offcanvas } from "react-bootstrap";
 
 export function Header() {
   const [show, setShow] = useState(false);
 
   return (
-    <header className="Header absolute w-full z-10 lg:justify-between items-center bg-white flex px-4 py-2 h-20">
+    <header className="Header font-archivo absolute w-full z-10 sm:justify-between items-center bg-white/80 flex px-4 py-2 h-20">
       <Image
-        className="Icon lg:hidden"
-        src="/Icons/offcanvasIcon.svg"
-        alt=""
-        width={30}
-        height={30}
-        onClick={() => setShow(!show)}
-      />
-      <Offcanvas
-        show={show}
-        onHide={() => setShow(false)}
-        placement="start"
-        style={{ width: "50%" }}
-      >
-        <Offcanvas.Header className="bg-primary_color flex">
-          <button
-            className="CloseButton text-secondary_neutral_color"
-            onClick={() => setShow(false)}
-          >
-            X
-          </button>
-          <Image
-            className="Logo h-5/6"
-            src="/global/fullLogo.svg"
-            alt=""
-            width={250}
-            height={200}
-          />
-        </Offcanvas.Header>
-        <Offcanvas.Body className="bg-primary_color"></Offcanvas.Body>
-      </Offcanvas>
-      <Image
-        className="Logo h-2/3"
+        className="Logo h-2/5 sm:h-2/3"
         src="/global/fullLogo.svg"
         alt=""
         width={250}
@@ -84,31 +52,33 @@ export function Header() {
         </div>
       </div>
 
-      <div className="lg:flex hidden gap-4 items-center">
-        <button className="Instagram flex items-center justify-center bg-secondary_color p-2 w-10 h-10 rounded-sm">
+      <div className="flex gap-4 items-center">
+        <button className="Instagram flex items-center justify-center bg-secondary_color p-2 w-10 h-10 rounded-sm hover:bg-[#94624c] hover:scale-105 transition duration-300">
           <Image
             className="Icon w-full h-full"
             src="/Icons/instagramIcon.svg"
             alt=""
-            width={40}
-            height={40}
+            width={30}
+            height={30}
           />
         </button>
-        <button className="Button font font-semibold bg-secondary_color rounded-sm h-2/3 flex items-center justify-center gap-2 p-2 w-48">
+        <button className="Button font-semibold bg-secondary_color rounded-sm h-10 w-10 md:w-max flex items-center gap-1 p-2 hover:bg-[#94624c] hover:scale-105 transition duration-300">
           <Image
-            className="Icon"
             src="/Icons/whatsappIcon.svg"
             alt=""
-            width={15}
-            height={15}
+            width={30}
+            height={30}
+            className="h-full"
           />
-          Fale Conosco
+          <span className="w-full hidden md:block text-xs md:text-base">
+            Fale Conosco
+          </span>
           <Image
-            className="Icon"
             src="/Icons/arrowRight.svg"
             alt=""
-            width={15}
-            height={15}
+            width={30}
+            height={30}
+            className="h-full hidden md:block"
           />
         </button>
       </div>

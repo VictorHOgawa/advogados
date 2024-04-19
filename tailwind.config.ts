@@ -71,7 +71,7 @@ const config: Config = {
     },
     screens: {
       xxs: "200px",
-      xs: "390px",
+      xs: "320px",
       sm: "425px",
       md: "768px",
       lg: "1024px",
@@ -80,7 +80,9 @@ const config: Config = {
       "3xl": "2560px",
     },
     fontFamily: {
-      main_font: ["Playfair Display", "serif"],
+      archivo: ["archivo", "serif"],
+      bigShouldersText: ["Big Shoulders Text", "serif"],
+      marcellus: ["Marcellus", "serif"],
     },
   },
   plugins: [],

@@ -9,10 +9,10 @@ import Image from "next/image";
 
 export default function Home() {
   return (
-    <main>
+    <main className="flex flex-col">
       <Header />
       <Hero />
-      <div className="w-full h-28 bg-red-500 relative">
+      <div className="w-full h-28 relative bg-black">
         <Image
           src="/global/texturedDivider.svg"
           fill
@@ -31,7 +31,6 @@ export default function Home() {
       <Reference />
       <Team />
       <Topics />
-
       <Footer />
     </main>
   );

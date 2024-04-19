@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export function Footer() {
   return (
-    <footer className="Footer relative w-full h-80 flex items-center justify-center bg-primary_color">
+    <footer className="Footer relative w-full h-32 lg:h-40 flex items-center justify-center bg-primary_color">
       <Image
         src="/global/footerTexture.png"
         alt=""
@@ -11,7 +11,7 @@ export function Footer() {
         className="w-full h-full object-cover absolute opacity-10"
       />
       <Image
-        className="Logo h-full"
+        className="Logo h-full md:h-1/2 w-4/5"
         src="/global/fullLogoWhite.svg"
         alt=""
         width={500}
