@@ -1,76 +1,47 @@
-import { ScrollTrigger, gsap } from "@/lib/gsap";
+import { gsap } from "@/lib/gsap";
+import { useGSAP } from "@gsap/react";
 import Image from "next/image";
-import { useEffect, useState } from "react";
 
 export function Reference() {
-  const [enter, setEnter] = useState(false);
-  useEffect(() => {
-    let ctx = gsap.context(() => {
-      ScrollTrigger.create({});
-      gsap.to(".label1", {
-        x: "85vw",
-        duration: 2,
-        ease: "none",
-        scrollTrigger: {
-          trigger: ".label3",
-          start: "center bottom",
-          end: "center 50%",
-          scrub: 1,
-        },
-      });
-      gsap.to(".label2", {
-        x: "85vw",
-        duration: 0.5,
-        ease: "none",
-        scrollTrigger: {
-          trigger: ".label3",
-          start: "center bottom",
-          end: "center 55%",
-          scrub: 1,
-        },
-      });
-      gsap.to(".label4", {
-        x: "90vw",
-        duration: 0.5,
-        ease: "none",
-        scrollTrigger: {
-          trigger: ".label3",
-          start: "center bottom",
-          end: "center 65%",
-          scrub: 1,
-        },
-      });
-    });
-    return () => ctx.revert();
-  }, []);
-
-  useEffect(() => {
-    if (enter) {
-      gsap.to(".panel", {
-        x: "100vw",
-        duration: 0.5,
-        ease: "none",
-      });
-      gsap.to(".label3", {
-        color: "white",
-        duration: 0.2,
-      });
-    } else {
-      gsap.to(".panel", {
-        x: "-100vw",
-        duration: 0.5,
-        ease: "none",
-      });
-      gsap.to(".label3", {
-        color: "#A66E55",
-        duration: 0.2,
-      });
-    }
-  }, [enter]);
+  useGSAP(() => {
+    gsap
+      .timeline({})
+      .fromTo(
+        ".ArtLeft",
+        { opacity: 0, x: -50 },
+        {
+          scrollTrigger: {
+            trigger: ".ArtSectionLeft",
+            start: "top bottom",
+            end: "top center",
+            scrub: true,
+            once: true,
+          },
+          opacity: 1,
+          x: 0,
+        }
+      )
+      .fromTo(
+        ".ArtRight",
+        { opacity: 0, x: 50 },
+        {
+          scrollTrigger: {
+            trigger: ".ArtSectionRight",
+            start: "top bottom",
+            end: "top center",
+            scrub: true,
+            markers: true,
+            once: true,
+          },
+          opacity: 1,
+          x: 0,
+        }
+      );
+  });
 
   return (
-    <section className="flex flex-col w-full h-full bg-[url('/global/texturedBackground1.png')] bg-cover bg-no-repeat bg-center">
-      <div className="Results relative flex flex-col sm:py-2 p-0 w-full">
+    <section className="flex flex-col w-full h-full bg-[url('/global/texturedBackground1.png')] bg-cover bg-no-repeat bg-center overflow-x-hidden">
+      <div className="ArtSectionLeft relative flex flex-col sm:py-2 p-0 w-full">
         <Image
           src="/global/logo.svg"
           width={400}
@@ -85,14 +56,14 @@ export function Reference() {
             alt=""
             width={450}
             height={250}
-            className="w-full max-w-[400px] lg:w-[450px]"
+            className="ArtLeft w-full max-w-[400px] lg:w-[450px]"
           />
           <Image
             src="/global/art2.png"
             alt=""
             width={450}
             height={250}
-            className="w-full max-w-[400px] lg:w-[450px]"
+            className="ArtLeft w-full max-w-[400px] lg:w-[450px]"
           />
         </div>
         <div className="flex flex-col w-full lg:w-[calc(100%-450px)] lg:ml-[450px] mt-[500px] lg:mt-10 p-4 lg:p-16 gap-4 lg:gap-16">
@@ -140,7 +111,7 @@ export function Reference() {
           </div>
         </div>
       </div>
-      <div className="Results relative flex flex-col lg:justify-between lg:flex-row lg:self-end sm:py-2 p-0 w-full">
+      <div className="ArtSectionRight relative flex flex-col lg:justify-between lg:flex-row lg:self-end sm:py-2 p-0 w-full">
         <div className="flex flex-col w-full lg:w-[calc(100%-450px)] items-end text-end mt-10 p-4 lg:px-16 gap-4 lg:gap-16">
           <div className="flex flex-col gap-2">
             <span className="text-secondary_color tracking-widest text-sm font-archivo">
@@ -191,14 +162,14 @@ export function Reference() {
             alt=""
             width={450}
             height={250}
-            className="w-full max-w-[400px] self-end lg:w-[450px]"
+            className="ArtRight w-full max-w-[400px] self-end lg:w-[450px]"
           />
           <Image
             src="/global/art2.png"
             alt=""
             width={450}
             height={250}
-            className="w-full max-w-[400px] self-end lg:w-[450px]"
+            className="ArtRight w-full max-w-[400px] self-end lg:w-[450px]"
           />
         </div>
       </div>

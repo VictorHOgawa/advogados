@@ -1,3 +1,5 @@
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
 import Image from "next/image";
 import "swiper/css";
 
@@ -40,6 +42,22 @@ export function Team() {
       name: "Assessoria em LGPD",
     },
   ];
+
+  useGSAP(() => {
+    gsap
+      .timeline({})
+      .fromTo(
+        ".Title",
+        { opacity: 0, y: 50 },
+        { opacity: 1, y: 0, duration: 0.5 }
+      )
+      .fromTo(
+        ".Subtitle",
+        { opacity: 0, x: 50 },
+        { opacity: 1, x: 0, duration: 1 }
+      );
+  });
+
   return (
     <section className="Team flex flex-col items-center w-full">
       <Image
@@ -70,7 +88,7 @@ export function Team() {
             {data.map((item, index) => (
               <div
                 key={index}
-                className={`relative col-span-3 row-span-3 rounded-lg flex flex-col gap-1 p-1 lg:p-4 ${index % 3 === 0 ? "items-start text-start" : index % 3 === 1 ? "items-center text-center" : "items-end text-end"} justify-between group cursor-pointer bg-white`}
+                className={`relative col-span-3 row-span-3 rounded-lg flex flex-col gap-1 xs:p-1 md:p-4 ${index % 3 === 0 ? "items-start text-start" : index % 3 === 1 ? "items-center text-center" : "items-end text-end"} justify-between group cursor-pointer bg-white`}
               >
                 <Image
                   src="/global/art1.png"
@@ -91,7 +109,7 @@ export function Team() {
                 <span className="z-10 text-sm lg:text-xl font-semibold leading-3 lg:leading-5 tracking-wider text-primary_color font-bigShouldersText group-hover:text-white">
                   {item.name}
                 </span>
-                <button className="z-10 flex items-center gap-1 text-white text-xs xl:text-sm 2xl:text-base bg-primary_color rounded-sm px-1 lg:px-3 py-1 font-archivo group-hover:bg-[#1b2139] group-hover:scale-105 transition duration-300">
+                <button className="z-10 flex items-center w-full gap-1 text-white text-xs xl:text-sm bg-primary_color rounded-sm xs:px-1 lg:px-2 py-1 font-archivo group-hover:bg-[#1b2139] group-hover:scale-105 transition duration-300">
                   <Image
                     src="/Icons/whatsappIconWhite.svg"
                     alt=""

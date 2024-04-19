@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@gsap/react": "^2.1.0",
     "@trivago/prettier-plugin-sort-imports": "^4.3.0",
     "axios": "^1.6.7",
     "bootstrap": "^5.3.2",
